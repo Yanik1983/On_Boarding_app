@@ -31,6 +31,12 @@ Other features:
 
 - **Progress is saved** in the browser on that computer, so employees can pause and resume. Nothing is sent anywhere.
 - **Quality settings** (gear icon): *Auto* adapts to the computer; *High* renders at the screen's native resolution; *Ultra 4K* renders at least 3840 pixels wide.
+- **Phones and tablets**: the text becomes a bottom sheet and the 3D scene moves into the space above it. **Hide text** shrinks the panel to its title and buttons so the 3D fills the screen (this also works on desktop).
+
+  | | |
+  |---|---|
+  | ![Phone](docs/screenshots/phone-credo.png) | ![Phone, text hidden](docs/screenshots/phone-products-text-hidden.png) |
+
 - **Accessibility**: keyboard navigation (← →, Esc), reduced-motion mode (follows the Windows setting), and a text-only mode. The text-only mode switches on automatically when the computer can't show 3D.
 - **Draft badge**: shown while any content is marked `"draft"`, so nobody mistakes unreviewed text for approved material.
 

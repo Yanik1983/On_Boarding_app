@@ -47,7 +47,7 @@ function useKeyboard() {
   }, [content])
 }
 
-export function Overlay({ notice }: { notice: keyof typeof notices | null }) {
+export function Overlay({ notice, show3d }: { notice: keyof typeof notices | null; show3d: boolean }) {
   const content = useContent()
   const current = useStore((s) => s.current)
   const menuOpen = useStore((s) => s.menuOpen)
@@ -84,7 +84,7 @@ export function Overlay({ notice }: { notice: keyof typeof notices | null }) {
           {notices[notice]}
         </p>
       )}
-      <StationPanel key={station.id} station={station} index={current} />
+      <StationPanel key={station.id} station={station} index={current} collapsible={show3d} />
       <JourneyBar />
       {menuOpen && <StationMenu />}
       {settingsOpen && <Settings />}

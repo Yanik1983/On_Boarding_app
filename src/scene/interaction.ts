@@ -16,7 +16,10 @@ export function useSelection(key?: string) {
     const store = useStore.getState()
     store.select(selectionKey, value)
     const station = content.stations.find((s) => s.id === id)
-    if (station && value !== null) store.setStep(id, exploreStepIndex(station))
+    if (station && value !== null) {
+      store.setStep(id, exploreStepIndex(station))
+      store.setSheetCollapsed(false)
+    }
     if (focus !== undefined) store.setFocus(focus)
   }
   return [selected, select] as const

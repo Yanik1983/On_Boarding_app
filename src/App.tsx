@@ -36,7 +36,7 @@ function Journey() {
       ) : (
         <div className="text-only-backdrop" aria-hidden />
       )}
-      <Overlay notice={notice} />
+      <Overlay notice={notice} show3d={show3d} />
     </div>
   )
 }

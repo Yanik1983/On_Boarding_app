@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState, type ReactNode } from 'react'
 import { useContent } from '../content/context'
 import type { Station as StationData } from '../content/schema'
 import { urlOptions } from '../lib/params'
+import { isHandheld } from '../lib/responsive'
 import { useStore, type Quality } from '../state/store'
 import { CameraRig } from './CameraRig'
 import { Effects } from './Effects'
@@ -64,7 +65,7 @@ function resolution(quality: Quality, factor: number, viewportWidth: number) {
   const native = window.devicePixelRatio || 1
   if (quality === 'ultra') return Math.min(3, Math.max(native, 3840 / Math.max(1, viewportWidth)))
   if (quality === 'high') return Math.min(native, 2)
-  return Math.max(0.75, Math.min(native, 2) * factor)
+  return Math.max(0.75, Math.min(native, isHandheld() ? 1.5 : 2) * factor)
 }
 
 export function Scene() {
@@ -76,7 +77,7 @@ export function Scene() {
   const viewportWidth = useViewportWidth()
   const dpr = resolution(quality, factor, viewportWidth)
   const lowPower = quality === 'auto' && factor < 0.7
-  const initialView = stationView(current, window.innerWidth / Math.max(1, window.innerHeight))
+  const initialView = stationView(current, window.innerWidth, window.innerHeight)
 
   return (
     <Canvas

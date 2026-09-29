@@ -23,6 +23,16 @@ export const ChevronRight = (p: SVGProps<SVGSVGElement>) => (
     <path d="M9 18l6-6-6-6" />
   </svg>
 )
+export const ChevronUp = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M18 15l-6-6-6 6" />
+  </svg>
+)
+export const ChevronDown = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M6 9l6 6 6-6" />
+  </svg>
+)
 export const CheckIcon = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}>
     <path d="M20 6L9 17l-5-5" />

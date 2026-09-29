@@ -7,6 +7,13 @@ export type Vec3 = [number, number, number]
 export interface Focus {
   position: Vec3
   target: Vec3
+  /** The point of interest itself (target may be shifted to make room for the panel). */
+  center?: Vec3
+}
+/** Screen area (in CSS pixels) covered by the interface at the top and bottom, on phones. */
+export interface ViewInset {
+  top: number
+  bottom: number
 }
 export interface QuizResult {
   score: number
@@ -50,6 +57,8 @@ interface State {
   focus: Focus | null
   menuOpen: boolean
   settingsOpen: boolean
+  sheetCollapsed: boolean
+  viewInset: ViewInset
   lab: LabState
 
   init: (stationIds: string[], options: { allowFreeOrder: boolean; preview?: boolean }) => void
@@ -68,6 +77,8 @@ interface State {
   setTextOnly: (value: boolean) => void
   setMenuOpen: (open: boolean) => void
   setSettingsOpen: (open: boolean) => void
+  setSheetCollapsed: (collapsed: boolean) => void
+  setViewInset: (inset: ViewInset) => void
   setLab: (patch: Partial<LabState>) => void
   resetProgress: () => void
 }
@@ -137,6 +148,8 @@ export const useStore = create<State>()(
       focus: null,
       menuOpen: false,
       settingsOpen: false,
+      sheetCollapsed: false,
+      viewInset: { top: 0, bottom: 0 },
       lab: initialLab,
 
       init: (stationIds, { allowFreeOrder, preview = false }) => {
@@ -180,6 +193,11 @@ export const useStore = create<State>()(
       setTextOnly: (textOnly) => set({ textOnly }),
       setMenuOpen: (menuOpen) => set({ menuOpen, settingsOpen: false }),
       setSettingsOpen: (settingsOpen) => set({ settingsOpen, menuOpen: false }),
+      setSheetCollapsed: (sheetCollapsed) => set({ sheetCollapsed }),
+      setViewInset: (viewInset) => {
+        const { top, bottom } = get().viewInset
+        if (Math.abs(top - viewInset.top) > 0.5 || Math.abs(bottom - viewInset.bottom) > 0.5) set({ viewInset })
+      },
       setLab: (patch) => set((s) => ({ lab: { ...s.lab, ...patch } })),
       resetProgress: () =>
         set((s) => ({

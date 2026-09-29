@@ -132,3 +132,29 @@ test('a broken content block shows a helpful message', async ({ page }) => {
     fs.unlinkSync(broken)
   }
 })
+
+test.describe('on a phone', () => {
+  test.use({ viewport: { width: 390, height: 664 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 })
+
+  test('the text sheet leaves the 3D view visible and can be hidden', async ({ page }) => {
+    await offline(page)
+    await page.goto(url + '?preview&station=credo')
+    const panel = page.locator('.panel')
+    const viewport = page.viewportSize()!
+
+    // The sheet sits in the lower part of the screen, leaving the upper part for the 3D scene.
+    const open = (await panel.boundingBox())!
+    expect(open.y).toBeGreaterThan(viewport.height * 0.4)
+
+    await page.getByRole('button', { name: /Hide text/ }).click()
+    await expect(page.locator('#panel-body')).toBeHidden()
+    const collapsed = (await panel.boundingBox())!
+    expect(collapsed.height).toBeLessThan(viewport.height * 0.25)
+    expect(collapsed.y).toBeGreaterThan(viewport.height * 0.6)
+    // Navigation still works while the text is hidden.
+    await expect(page.locator('.panel-footer').getByRole('button', { name: /^Next/ })).toBeVisible()
+
+    await page.getByRole('button', { name: /Show text/ }).click()
+    await expect(page.locator('#panel-body')).toBeVisible()
+  })
+})

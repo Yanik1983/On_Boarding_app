@@ -1,11 +1,12 @@
-import { useEffect, useRef, type CSSProperties } from 'react'
+import { useEffect, useLayoutEffect, useRef, type CSSProperties, type RefObject } from 'react'
 import { useContent } from '../content/context'
 import type { Station } from '../content/schema'
+import { SHEET_QUERY } from '../lib/responsive'
 import { getSteps } from '../lib/steps'
 import { canVisit, useStore } from '../state/store'
 import { Checkpoint } from './Checkpoint'
 import { Explorer } from './explorers/Explorer'
-import { CheckIcon, ChevronLeft, ChevronRight } from './icons'
+import { CheckIcon, ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from './icons'
 
 function Paragraphs({ text }: { text: string }) {
   return (
@@ -20,7 +21,30 @@ function Paragraphs({ text }: { text: string }) {
   )
 }
 
-export function StationPanel({ station, index }: { station: Station; index: number }) {
+/** Tells the 3D view how much of the screen the panel covers when it is a bottom sheet (phones). */
+function useReportInset(panel: RefObject<HTMLElement | null>) {
+  useLayoutEffect(() => {
+    const element = panel.current
+    if (!element) return
+    const update = () => {
+      const { setViewInset } = useStore.getState()
+      if (!window.matchMedia(SHEET_QUERY).matches) return setViewInset({ top: 0, bottom: 0 })
+      const topbar = document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0
+      // offsetTop ignores the slide-in transform, so the value is stable during the animation.
+      setViewInset({ top: topbar, bottom: Math.max(0, window.innerHeight - element.offsetTop) })
+    }
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(element)
+    window.addEventListener('resize', update)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', update)
+    }
+  }, [panel])
+}
+
+export function StationPanel({ station, index, collapsible }: { station: Station; index: number; collapsible: boolean }) {
   const { stations } = useContent()
   const steps = getSteps(station)
   const storedStep = useStore((s) => s.steps[station.id] ?? 0)
@@ -29,7 +53,11 @@ export function StationPanel({ station, index }: { station: Station; index: numb
   const canGoNext = useStore((s) => canVisit(s, index + 1))
   const nextStation = stations[index + 1]
   const body = useRef<HTMLDivElement>(null)
+  const panel = useRef<HTMLElement>(null)
+  const sheetCollapsed = useStore((s) => s.sheetCollapsed)
+  const collapsed = collapsible && sheetCollapsed
   const current = steps[step]
+  useReportInset(panel)
   const setStep = (value: number) => useStore.getState().setStep(station.id, value)
 
   useEffect(() => {
@@ -39,7 +67,12 @@ export function StationPanel({ station, index }: { station: Station; index: numb
   const hint = station.kind === 'welcome' ? 'Enter your name to start' : steps.some((s) => s.type === 'checkpoint') ? 'Answer the quick check to continue' : 'Complete this station to continue'
 
   return (
-    <aside className="panel" aria-labelledby="panel-title" style={{ '--accent': station.color } as CSSProperties}>
+    <aside
+      ref={panel}
+      className={collapsed ? 'panel collapsed' : 'panel'}
+      aria-labelledby="panel-title"
+      style={{ '--accent': station.color } as CSSProperties}
+    >
       <header className="panel-header">
         <p className="kicker">
           <span>{`Station ${index + 1} of ${stations.length}`}</span>
@@ -49,6 +82,24 @@ export function StationPanel({ station, index }: { station: Station; index: numb
             <span className="done-chip">
               <CheckIcon /> Completed
             </span>
+          )}
+          {collapsible && (
+            <button
+              className="collapse-toggle"
+              aria-expanded={!collapsed}
+              aria-controls="panel-body"
+              onClick={() => useStore.getState().setSheetCollapsed(!collapsed)}
+            >
+              {collapsed ? (
+                <>
+                  Show text <ChevronUp />
+                </>
+              ) : (
+                <>
+                  Hide text <ChevronDown />
+                </>
+              )}
+            </button>
           )}
         </p>
         <h1 id="panel-title">{station.title}</h1>
@@ -66,7 +117,7 @@ export function StationPanel({ station, index }: { station: Station; index: numb
         </nav>
       </header>
 
-      <div className="panel-body" ref={body} data-step-type={current.type}>
+      <div className="panel-body" id="panel-body" ref={body} data-step-type={current.type} hidden={collapsed}>
         <h2 className="step-title">{current.title}</h2>
         {current.type === 'card' && (
           <>

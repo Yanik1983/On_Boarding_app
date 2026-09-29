@@ -1,4 +1,6 @@
+import { useThree } from '@react-three/fiber'
 import type { ReactNode } from 'react'
+import { isSheetLayout } from '../lib/responsive'
 import { stationPosition } from './layout'
 import { Label } from './Label'
 import { StationContext, type StationInfo } from './StationContext'
@@ -13,6 +15,8 @@ interface Props {
 
 /** Shared exhibit platform: satin disc, glowing rim and a 3D title. */
 export function Station({ info, number, title, color, children }: Props) {
+  // On phones the text panel already shows the title, and there is no room for it above the scene.
+  const showTitle = useThree((s) => !isSheetLayout(s.size.width, s.size.height))
   return (
     <StationContext.Provider value={info}>
       <group position={stationPosition(info.index)} visible={info.visible}>
@@ -28,7 +32,7 @@ export function Station({ info, number, title, color, children }: Props) {
           <ringGeometry args={[6.2, 6.24, 128]} />
           <meshBasicMaterial color={color} transparent opacity={0.35} />
         </mesh>
-        <group position={[0, 7.1, -5.6]}>
+        <group position={[0, 7.1, -5.6]} visible={showTitle}>
           <Label fontSize={0.34} color={color} letterSpacing={0.18} position={[0, 0.78, 0]}>
             {`STATION ${number}`}
           </Label>
