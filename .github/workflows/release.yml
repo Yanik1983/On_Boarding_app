@@ -1,0 +1,33 @@
+name: Release
+
+# Push a tag such as v0.1.0 to build the single HTML file and publish it as a GitHub release.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - name: Check the file version matches the tag
+        run: test -f "dist/JnJ-MedTech-Onboarding-${GITHUB_REF_NAME}.html"
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: New Employee Journey ${{ github.ref_name }}
+          body_path: release-notes/${{ github.ref_name }}.md
+          files: dist/JnJ-MedTech-Onboarding-${{ github.ref_name }}.html
+          fail_on_unmatched_files: true
