@@ -1,0 +1,48 @@
+{
+  "id": "products",
+  "kind": "products",
+  "title": "Our Products",
+  "subtitle": "A showroom of selected technologies",
+  "color": "#c2185b",
+  "minutes": 6,
+  "status": "draft",
+  "sources": [
+    { "label": "Johnson & Johnson MedTech – products", "url": "https://www.jnjmedtech.com" }
+  ],
+  "cards": [
+    {
+      "title": "Welcome to the showroom",
+      "body": "Here are a few examples from each business unit. Click a pedestal to inspect a product – drag to rotate it – or filter by business unit.\n\nThe 3D models are simplified illustrations, not exact product designs."
+    },
+    {
+      "title": "Talking about products",
+      "body": "Medical device information is regulated. When you talk about our products – inside or outside the company – stick to approved materials, and never suggest uses that are not approved. If in doubt, ask your manager or Regulatory Affairs."
+    }
+  ],
+  "disclaimer": "General overview for internal onboarding only – not promotional material. Availability and approved uses differ by country. Product names are trademarks of their respective owners.",
+  "products": [
+    { "id": "carto", "name": "CARTO 3 System", "unit": "cardiovascular", "model": "mapping-system", "what": "A 3D mapping and navigation system used during electrophysiology procedures. It builds a live, colour-coded map of the heart's electrical activity and shows where catheters are inside the heart.", "who": "Patients treated for heart rhythm disorders, and the electrophysiologists who treat them.", "technology": "Magnetic and current-based location sensing, signal processing and real-time 3D visualisation." },
+    { "id": "varipulse", "name": "VARIPULSE Platform", "unit": "cardiovascular", "model": "ablation-catheter", "what": "A pulsed field ablation system for treating atrial fibrillation. Short, high-energy electrical pulses create lesions that block abnormal electrical signals.", "who": "Patients with atrial fibrillation, where approved.", "technology": "Pulsed electric fields that create lesions without relying on heating or freezing tissue, integrated with 3D mapping." },
+    { "id": "impella", "name": "Impella heart pumps", "unit": "cardiovascular", "model": "heart-pump", "what": "Very small heart pumps inserted through a blood vessel to temporarily support the heart's pumping function.", "who": "Patients whose heart needs temporary support, for example during high-risk procedures or cardiogenic shock.", "technology": "A miniaturised pump delivered by catheter, controlled and monitored from a console." },
+    { "id": "shockwave", "name": "Shockwave IVL", "unit": "cardiovascular", "model": "ivl-catheter", "what": "Intravascular lithotripsy catheters that use sound pressure waves to crack calcium in narrowed arteries so they can be opened and treated.", "who": "Patients with calcified coronary or peripheral artery disease.", "technology": "Electrical discharges inside a fluid-filled balloon create sonic pressure waves." },
+    { "id": "echelon", "name": "ECHELON staplers", "unit": "surgery", "model": "stapler", "what": "Surgical staplers used to cut and seal tissue in procedures such as bariatric, thoracic and colorectal surgery.", "who": "Surgeons and their patients in open and minimally invasive surgery.", "technology": "Controlled tissue compression, staple formation and – in powered versions – motor-driven firing." },
+    { "id": "harmonic", "name": "HARMONIC scalpel", "unit": "surgery", "model": "energy-device", "what": "An ultrasonic energy device that cuts and seals blood vessels at the same time.", "who": "Surgeons across many specialties, and their patients.", "technology": "A blade vibrating tens of thousands of times per second; the friction coagulates and cuts tissue." },
+    { "id": "vicryl", "name": "VICRYL sutures", "unit": "surgery", "model": "suture", "what": "Absorbable sutures used to close wounds and tissue layers. The body gradually absorbs them.", "who": "Surgeons, and patients in almost every type of surgery.", "technology": "A synthetic absorbable polymer (polyglactin 910) that breaks down by hydrolysis." },
+    { "id": "monarch", "name": "MONARCH Platform", "unit": "surgery", "model": "robot", "what": "A robotic platform for minimally invasive procedures, for example robotic bronchoscopy to reach and sample hard-to-reach areas of the lung.", "who": "Pulmonologists and urologists, and their patients.", "technology": "Flexible robotics, computer vision and electromagnetic navigation." },
+    { "id": "acuvue", "name": "ACUVUE contact lenses", "unit": "vision", "model": "contact-lens", "what": "A family of soft contact lenses for vision correction, including daily disposable and reusable lenses.", "who": "People with refractive errors such as nearsightedness, farsightedness, astigmatism or presbyopia.", "technology": "Hydrogel and silicone-hydrogel materials and precise optical designs." },
+    { "id": "tecnis", "name": "TECNIS intraocular lenses", "unit": "vision", "model": "iol", "what": "Artificial lenses implanted during cataract surgery to replace the eye's clouded natural lens.", "who": "Patients having cataract surgery, and their eye surgeons.", "technology": "Optical designs including monofocal, extended depth of focus and multifocal lenses." },
+    { "id": "attune", "name": "ATTUNE Knee System", "unit": "orthopaedics", "model": "knee-implant", "what": "A total knee replacement system of implants and instruments.", "who": "Patients with severe knee arthritis, and orthopaedic surgeons.", "technology": "Implant geometry and materials designed for motion and stability, plus precise instruments." },
+    { "id": "velys", "name": "VELYS Robotic-Assisted Solution", "unit": "orthopaedics", "model": "robot", "what": "A robotic-assisted system that helps surgeons plan and carry out knee replacement procedures.", "who": "Orthopaedic surgeons and patients having knee replacement.", "technology": "Robotics, camera-based tracking and data-driven surgical planning." }
+  ],
+  "checkpoint": {
+    "question": "How does Shockwave intravascular lithotripsy (IVL) help open a calcified artery?",
+    "options": [
+      "It dissolves calcium with medicine",
+      "It uses sound pressure waves to crack the calcium",
+      "It freezes the artery wall",
+      "It removes the artery"
+    ],
+    "answer": 1,
+    "explanation": "IVL creates sonic pressure waves inside a balloon that crack calcium so the vessel can be opened."
+  }
+}

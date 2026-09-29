@@ -1,0 +1,52 @@
+{
+  "id": "company",
+  "kind": "company",
+  "title": "Our Company",
+  "subtitle": "140 years of healthcare innovation",
+  "color": "#2f5d8a",
+  "minutes": 4,
+  "status": "draft",
+  "sources": [
+    { "label": "Johnson & Johnson – Our heritage", "url": "https://www.jnj.com/our-heritage" },
+    { "label": "Johnson & Johnson Form 10-K (segments)", "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000038/jnj-20241229.htm" },
+    { "label": "J&J press release: intent to separate the Orthopaedics business (Oct 2025)", "url": "https://www.jnj.com/media-center/press-releases/johnson-johnson-announces-intent-to-separate-its-orthopaedics-business" }
+  ],
+  "cards": [
+    {
+      "title": "Where we come from",
+      "body": "Johnson & Johnson was founded in 1886 in New Brunswick, New Jersey, by three brothers – Robert Wood, James Wood and Edward Mead Johnson. Their first big idea was to make surgery safer with ready-to-use sterile dressings, at a time when infections after operations were common.\n\nThat focus on making care safer and better has guided the company ever since."
+    },
+    {
+      "title": "Johnson & Johnson today",
+      "body": "Today Johnson & Johnson is a healthcare company focused on two areas:",
+      "bullets": [
+        "Innovative Medicine – medicines for areas such as oncology, immunology and neuroscience.",
+        "MedTech – technologies and devices used by surgeons, cardiologists, eye-care professionals and hospitals.",
+        "The consumer health business was separated in 2023 and now operates as an independent company (Kenvue)."
+      ]
+    },
+    {
+      "title": "What connects us",
+      "body": "Whatever our role, we share one purpose: to change the trajectory of health for humanity. In MedTech that means helping clinicians treat patients with less invasive, more precise and more personalised procedures."
+    }
+  ],
+  "milestones": [
+    { "year": "1886", "title": "The company is founded", "text": "Three Johnson brothers start the company in New Brunswick, New Jersey, to produce sterile surgical dressings." },
+    { "year": "1888", "title": "First commercial first-aid kits", "text": "Early first-aid kits bring ready-to-use supplies to railway workers and, later, families." },
+    { "year": "1943", "title": "Our Credo is written", "text": "Robert Wood Johnson, chairman and son of a founder, writes Our Credo – the values statement that still guides the company." },
+    { "year": "1949", "title": "Ethicon is established", "text": "Suture-making becomes a dedicated business – the start of today's Surgery portfolio." },
+    { "year": "1987", "title": "Disposable contact lenses", "text": "ACUVUE introduces one of the first disposable soft contact lenses, shaping today's Vision business." },
+    { "year": "2012", "title": "DePuy Synthes", "text": "The acquisition of Synthes is combined with DePuy to form a broad orthopaedics business." },
+    { "year": "2022", "title": "Abiomed joins", "text": "Heart-recovery technology, including very small heart pumps, joins the Cardiovascular portfolio." },
+    { "year": "2023", "title": "A focused healthcare company", "text": "Consumer Health separates as Kenvue. The company now focuses on Innovative Medicine and MedTech." },
+    { "year": "2024", "title": "Shockwave Medical joins", "text": "Intravascular lithotripsy expands Cardiovascular into coronary and peripheral artery disease." },
+    { "year": "2025", "title": "Orthopaedics separation announced", "text": "J&J announces its intent to separate the Orthopaedics business as a standalone company operating as DePuy Synthes." },
+    { "year": "2026", "title": "Business-unit-led MedTech", "text": "J&J MedTech moves to a business-unit-led operating model worldwide." }
+  ],
+  "checkpoint": {
+    "question": "Which two areas does Johnson & Johnson focus on today?",
+    "options": ["Consumer Health and MedTech", "Innovative Medicine and MedTech", "Pharmacy retail and Hospitals", "Innovative Medicine and Consumer Health"],
+    "answer": 1,
+    "explanation": "Since the separation of Consumer Health (Kenvue) in 2023, J&J focuses on Innovative Medicine and MedTech."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "id": "organization",
+  "kind": "organization",
+  "title": "How We're Organised",
+  "subtitle": "Departments and how they work together",
+  "color": "#0e7c86",
+  "minutes": 5,
+  "status": "draft",
+  "sources": [
+    { "label": "J&J MedTech shifts to a business-unit-led operating model (MassDevice)", "url": "https://www.massdevice.com/johnson-johnson-medtech-shift-business-unit-structure/" }
+  ],
+  "cards": [
+    {
+      "title": "A business-unit-led organisation",
+      "body": "Since January 2026 J&J MedTech runs on a business-unit-led operating model worldwide. Business units own their strategy and results end to end, which cuts layers of approval and helps teams move faster for customers and patients."
+    },
+    {
+      "title": "From idea to patient",
+      "body": "Every product travels the same journey. Watch the glowing token in the 3D scene: it moves from research and development, through quality, clinical and regulatory work, into manufacturing and supply, and finally to the teams who support clinicians and patients.\n\nSupport functions – such as Finance, HR, Technology, Legal & Compliance and EHS – make that journey possible."
+    },
+    {
+      "title": "Where do you fit?",
+      "body": "Your manager will show you your team's place on this map. The local organisation chart of our site is in the Our Site station – ask your onboarding buddy to walk you through it."
+    }
+  ],
+  "hubLabel": "Business unit",
+  "operatingModel": "Business units lead; functions partner with them. You will often work in cross-functional teams that bring several departments together around one product or project.",
+  "functions": [
+    { "id": "rnd", "name": "Research & Development", "lane": "core", "role": "Turns unmet clinical needs into new products – from first concept to a verified design.", "teams": ["Systems & mechanical engineering", "Electrical & software engineering", "Materials science", "Human factors"], "workWith": "Clinicians, Quality and Regulatory from day one of every project." },
+    { "id": "quality", "name": "Quality", "lane": "core", "role": "Makes sure every product is safe and effective, and that we follow our quality system and regulations.", "teams": ["Design quality", "Supplier quality", "Complaint handling", "Audits & compliance"], "workWith": "Every department – quality is everyone's responsibility." },
+    { "id": "clinical", "name": "Clinical & Medical Affairs", "lane": "core", "role": "Generates clinical evidence and medical expertise, and runs clinical studies.", "teams": ["Clinical operations", "Medical affairs", "Biostatistics", "Health economics"], "workWith": "R&D to design studies, Regulatory to submit evidence." },
+    { "id": "regulatory", "name": "Regulatory Affairs", "lane": "core", "role": "Plans the path to market and obtains approvals from authorities such as the FDA and EU notified bodies.", "teams": ["Regulatory strategy", "Submissions", "Labelling", "Post-market reporting"], "workWith": "R&D, Clinical and Quality on submissions." },
+    { "id": "operations", "name": "Operations & Supply Chain", "lane": "core", "role": "Manufactures products at the right quality and cost, and delivers them to hospitals on time.", "teams": ["Manufacturing & engineering", "Planning", "Procurement", "Logistics & distribution"], "workWith": "Quality every day; R&D when new products are transferred to production." },
+    { "id": "commercial", "name": "Commercial", "lane": "core", "role": "Brings products to clinicians: marketing, sales, professional education and customer support.", "teams": ["Marketing", "Sales", "Professional education", "Customer service"], "workWith": "Clinical for evidence, Operations for supply." },
+    { "id": "finance", "name": "Finance", "lane": "support", "role": "Plans budgets, tracks performance and supports investment decisions.", "teams": ["Business partnering", "Accounting"], "workWith": "Every business unit leader and project." },
+    { "id": "hr", "name": "Human Resources", "lane": "support", "role": "Hires, develops and supports our people – including your onboarding.", "teams": ["HR business partners", "Talent", "Rewards"], "workWith": "You and your manager throughout your career." },
+    { "id": "technology", "name": "Technology (IT & Digital)", "lane": "support", "role": "Provides secure systems, data and digital tools – and protects them from cyber threats.", "teams": ["IT support", "Cybersecurity", "Data & digital"], "workWith": "Everyone – contact the service desk for access and equipment." },
+    { "id": "legal", "name": "Legal & Compliance", "lane": "support", "role": "Protects the company and helps us act with integrity: contracts, privacy, anti-corruption and healthcare compliance.", "teams": ["Legal", "Healthcare compliance", "Privacy"], "workWith": "Commercial and anyone interacting with healthcare professionals." },
+    { "id": "ehs", "name": "Environment, Health & Safety", "lane": "support", "role": "Keeps people safe at work and protects the environment.", "teams": ["Safety", "Occupational health", "Environment & sustainability"], "workWith": "Everyone on site – especially labs and production." }
+  ],
+  "flow": ["rnd", "quality", "clinical", "regulatory", "operations", "commercial"],
+  "flowEndLabel": "Patients",
+  "checkpoint": {
+    "question": "What does a business-unit-led operating model mean?",
+    "options": [
+      "Every decision is made at global headquarters",
+      "Business units own their strategy and results end to end",
+      "Each country works completely on its own",
+      "Support functions decide on product strategy"
+    ],
+    "answer": 1,
+    "explanation": "Business units lead end to end, with functions partnering with them – fewer layers, faster decisions."
+  }
+}

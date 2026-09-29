@@ -1,0 +1,87 @@
+{
+  "id": "divisions",
+  "kind": "divisions",
+  "title": "Our Business Units",
+  "subtitle": "The divisions of J&J MedTech",
+  "color": "#6b3fa8",
+  "minutes": 5,
+  "status": "draft",
+  "sources": [
+    { "label": "Johnson & Johnson MedTech", "url": "https://www.jnjmedtech.com" },
+    { "label": "J&J press release: intent to separate the Orthopaedics business (Oct 2025)", "url": "https://www.jnj.com/media-center/press-releases/johnson-johnson-announces-intent-to-separate-its-orthopaedics-business" },
+    { "label": "J&J completes acquisition of Shockwave Medical", "url": "https://www.jnj.com/media-center/press-releases/johnson-johnson-completes-acquisition-of-shockwave-medical" }
+  ],
+  "cards": [
+    {
+      "title": "One MedTech, several business units",
+      "body": "J&J MedTech develops technologies used in operating rooms, catheterisation labs and eye clinics around the world. It is organised into business units, each focused on a group of medical specialties and the patients they treat.\n\nClick a pod in the 3D scene to explore each business unit."
+    },
+    {
+      "title": "Why business units?",
+      "body": "Each business unit knows its clinicians, procedures and patients deeply. From research through manufacturing to customer support, teams in a business unit work end to end on the same goal – better outcomes for their patients."
+    }
+  ],
+  "hubLabel": "J&J MedTech",
+  "units": [
+    {
+      "id": "cardiovascular",
+      "name": "Cardiovascular",
+      "color": "#d51900",
+      "icon": "heart",
+      "tagline": "Treating heart rhythm disorders, heart failure and blocked arteries",
+      "description": "The fastest-growing part of J&J MedTech. It combines leadership in electrophysiology with heart-recovery pumps and technology for calcified arteries.",
+      "focusAreas": [
+        "Electrophysiology – mapping and ablation for heart rhythm disorders such as atrial fibrillation (heritage: Biosense Webster)",
+        "Heart Recovery – very small heart pumps that support a weak heart (heritage: Abiomed)",
+        "Shockwave – intravascular lithotripsy for calcified coronary and peripheral arteries",
+        "Laminar – a left atrial appendage technology in development"
+      ]
+    },
+    {
+      "id": "surgery",
+      "name": "Surgery",
+      "color": "#0f6fb5",
+      "icon": "instrument",
+      "tagline": "Tools that help surgeons operate safely and precisely",
+      "description": "Products used in open and minimally invasive surgery across many specialties – from closing wounds to robotic procedures.",
+      "focusAreas": [
+        "Wound closure – sutures, skin adhesives and related products (heritage: Ethicon)",
+        "Surgical stapling and advanced energy devices that cut and seal tissue",
+        "Biosurgery – products that help control bleeding",
+        "Surgical robotics and digital solutions"
+      ]
+    },
+    {
+      "id": "vision",
+      "name": "Vision",
+      "color": "#0b8f9c",
+      "icon": "lens",
+      "tagline": "Helping people see better at every stage of life",
+      "description": "Covers everyday vision correction and eye surgery.",
+      "focusAreas": [
+        "Contact lenses – including the ACUVUE brand",
+        "Surgical vision – intraocular lenses for cataract surgery and laser vision correction"
+      ]
+    },
+    {
+      "id": "orthopaedics",
+      "name": "Orthopaedics",
+      "color": "#5a4fbf",
+      "icon": "joint",
+      "tagline": "Restoring movement – joints, trauma, spine and sports medicine",
+      "description": "DePuy Synthes offers implants, instruments and enabling technologies for hips, knees, shoulders, trauma, spine and sports medicine.",
+      "focusAreas": [
+        "Joint reconstruction – hips, knees and shoulders",
+        "Trauma, spine and sports medicine",
+        "Digital and robotic-assisted surgery (VELYS)"
+      ],
+      "note": "In October 2025 J&J announced its intent to separate the Orthopaedics business into a standalone company operating as DePuy Synthes, targeted within 18–24 months. Check with your manager for the latest status."
+    }
+  ],
+  "checkpoint": {
+    "question": "Which business unit includes electrophysiology and heart pumps?",
+    "options": ["Surgery", "Vision", "Cardiovascular", "Orthopaedics"],
+    "answer": 2,
+    "explanation": "Electrophysiology, Heart Recovery (Abiomed) and Shockwave are part of Cardiovascular."
+  }
+}

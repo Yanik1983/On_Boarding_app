@@ -1,0 +1,88 @@
+{
+  "id": "technology",
+  "kind": "technology",
+  "title": "Technology & Science",
+  "subtitle": "The theory behind medical devices",
+  "color": "#1f6feb",
+  "minutes": 7,
+  "status": "draft",
+  "sources": [
+    { "label": "ISO 13485 – Medical devices quality management systems", "url": "https://www.iso.org/standard/59752.html" },
+    { "label": "ISO 14971 – Application of risk management to medical devices", "url": "https://www.iso.org/standard/72704.html" },
+    { "label": "FDA – Quality Management System Regulation (QMSR)", "url": "https://www.fda.gov/medical-devices/postmarket-requirements-devices/quality-management-system-regulation-qmsr" },
+    { "label": "EU Medical Device Regulation (EU) 2017/745", "url": "https://eur-lex.europa.eu/eli/reg/2017/745/oj" }
+  ],
+  "cards": [
+    {
+      "title": "Engineering meets medicine",
+      "body": "A medical device has to work every single time, inside a human body or in the hands of a surgeon under pressure. That is why medical technology combines engineering and science with strict rules for design, testing and manufacturing.\n\nIn the lab you can try four interactive demos: how lenses correct vision, how the heart's electrical system works, how a knee implant moves, and how a device goes from idea to patient."
+    },
+    {
+      "title": "Design controls & verification",
+      "body": "Development follows design controls: we capture user needs, turn them into design inputs (requirements), create the design, and then prove it works.",
+      "bullets": [
+        "Verification – did we build the product right? (it meets every requirement)",
+        "Validation – did we build the right product? (it meets user needs in real use)",
+        "Human factors – the device must be easy and safe to use correctly"
+      ]
+    },
+    {
+      "title": "Risk management & quality systems",
+      "body": "Risk management (ISO 14971) runs through the whole life of a product: we identify hazards, estimate risks, reduce them and check that the remaining risk is acceptable.\n\nOur quality management system follows ISO 13485. In the United States the FDA's Quality Management System Regulation (QMSR), in force since February 2026, aligns the FDA requirements with ISO 13485."
+    },
+    {
+      "title": "Safe for the body",
+      "body": "Materials that touch the body are tested for biocompatibility (ISO 10993). Many products are sterilised – for example with ethylene oxide, radiation or steam – and the sterile barrier packaging must keep them sterile until use."
+    },
+    {
+      "title": "Approval and life on the market",
+      "body": "Before a product can be sold it needs approval or clearance – for example FDA 510(k), De Novo or PMA in the United States, or CE marking under the EU Medical Device Regulation (MDR).\n\nAfter launch we keep watching: post-market surveillance collects complaints, adverse events and real-world data, so we can keep improving and act fast if needed."
+    }
+  ],
+  "demos": [
+    {
+      "id": "optics",
+      "title": "Optics – correcting vision",
+      "text": "Light must focus exactly on the retina for a sharp image. In a nearsighted (myopic) eye the focus lands in front of the retina. A diverging (minus) lens moves the focus back onto the retina. Choose an eye and adjust the correcting lens.",
+      "points": ["Contact lenses and spectacles correct refractive errors", "In cataract surgery the clouded natural lens is replaced by an intraocular lens (IOL)", "Lens power is measured in dioptres (D)"]
+    },
+    {
+      "id": "heart",
+      "title": "Electrophysiology – the heart's wiring",
+      "text": "Each heartbeat starts with an electrical impulse from the sinus node that spreads in an orderly wave. In atrial fibrillation (AFib) the upper chambers fire chaotically. In catheter ablation, doctors use a 3D map to find the problem areas and create small lesions that block the faulty signals.",
+      "points": ["3D mapping shows electrical activity and catheter position in real time", "Ablation energy: radiofrequency, cryo or pulsed field", "Pulmonary vein isolation is a common AFib treatment"]
+    },
+    {
+      "id": "knee",
+      "title": "Biomechanics – knee replacement",
+      "text": "In a total knee replacement the worn joint surfaces are replaced. A metal femoral component glides on a polyethylene insert that sits on a metal tibial tray. Bend the knee to see how the parts move together.",
+      "points": ["Common materials: cobalt-chrome, titanium, highly cross-linked polyethylene", "Implant design balances stability and natural movement", "Robotic-assisted systems help plan and place implants"]
+    },
+    {
+      "id": "lifecycle",
+      "title": "Product lifecycle – idea to patient",
+      "text": "Every device follows a controlled lifecycle. Select a stage to learn what happens there.",
+      "points": ["Documentation is kept for every stage", "Risk management runs through all stages", "Quality is built in, not inspected in"]
+    }
+  ],
+  "lifecycle": [
+    { "id": "concept", "title": "Concept", "text": "Understand the unmet clinical need, the users and the use environment. Define user needs." },
+    { "id": "design", "title": "Design controls", "text": "Translate user needs into design inputs, create the design and review it at each phase." },
+    { "id": "vv", "title": "Verification & validation", "text": "Test that the design meets its requirements (verification) and the users' needs (validation)." },
+    { "id": "clinical", "title": "Clinical evidence", "text": "Collect clinical data that shows the device is safe and performs as intended." },
+    { "id": "approval", "title": "Regulatory approval", "text": "Submit evidence to authorities – e.g. FDA or an EU notified body – to obtain clearance or approval." },
+    { "id": "manufacturing", "title": "Manufacturing", "text": "Transfer the design to production with validated processes and controlled suppliers." },
+    { "id": "postmarket", "title": "Post-market", "text": "Monitor real-world performance, handle complaints, and improve the product." }
+  ],
+  "checkpoint": {
+    "question": "What is the difference between verification and validation?",
+    "options": [
+      "They are two words for the same test",
+      "Verification checks requirements are met; validation checks user needs are met",
+      "Verification is done by the FDA; validation by the manufacturer",
+      "Validation happens only after the product is on the market"
+    ],
+    "answer": 1,
+    "explanation": "Verification: did we build the product right? Validation: did we build the right product?"
+  }
+}

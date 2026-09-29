@@ -1,0 +1,31 @@
+{
+  "id": "welcome",
+  "kind": "welcome",
+  "title": "Welcome",
+  "subtitle": "Your first steps at J&J MedTech",
+  "color": "#d51900",
+  "minutes": 2,
+  "status": "draft",
+  "sources": [],
+  "greeting": "Welcome aboard",
+  "cards": [
+    {
+      "title": "We're glad you're here",
+      "body": "This journey introduces the company you have just joined: where we come from, what we believe in, how we are organised, the science behind our technologies, the products we make, and the site you will work at.\n\nIt takes about 40 minutes. You can pause at any time – your progress is saved on this computer."
+    },
+    {
+      "title": "How the journey works",
+      "body": "The journey is a path with stations. Each station has a few short cards, something to explore in 3D and one quick question. Answer it to unlock the next station.",
+      "bullets": [
+        "Use the Next and Back buttons, or the ← and → keys.",
+        "Drag in the 3D view to look around; scroll to zoom.",
+        "Click glowing objects in the 3D scene to learn more.",
+        "Open the menu (top right) to revisit any unlocked station."
+      ]
+    }
+  ],
+  "howTo": [
+    "At the end there is a short knowledge check and a certificate you can print or save as PDF.",
+    "If the 3D view feels slow, open Settings and choose a lower quality or the text-only mode."
+  ]
+}

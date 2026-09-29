@@ -1,0 +1,65 @@
+{
+  "id": "credo",
+  "kind": "credo",
+  "title": "Our Credo",
+  "subtitle": "The values that guide every decision",
+  "color": "#b8001f",
+  "minutes": 5,
+  "status": "draft",
+  "sources": [
+    { "label": "Johnson & Johnson – Our Credo", "url": "https://www.jnj.com/our-credo" }
+  ],
+  "cards": [
+    {
+      "title": "More than a mission statement",
+      "body": "Our Credo was written in 1943 by Robert Wood Johnson, shortly before the company became publicly traded. Long before anyone talked about corporate responsibility, it set out whom the company serves – and in which order.\n\nIt is still used today to guide decisions, big and small."
+    },
+    {
+      "title": "Four responsibilities, in order",
+      "body": "Our Credo names four groups we are responsible to. The order matters: when we look after the first three well, the business will be successful – which serves the fourth.",
+      "bullets": [
+        "1 · Patients, doctors, nurses, parents and everyone who uses our products and services",
+        "2 · Our employees",
+        "3 · The communities we live and work in, and the world community",
+        "4 · Our stockholders"
+      ]
+    },
+    {
+      "title": "Living Our Credo",
+      "body": "At work, Our Credo shows up in everyday choices: raising a quality concern even when it is inconvenient, treating colleagues with respect, protecting the environment, and making decisions with integrity. If something doesn't feel right, speak up – it is what Our Credo expects of all of us."
+    }
+  ],
+  "officialText": "",
+  "responsibilities": [
+    {
+      "id": "patients",
+      "title": "Patients & customers",
+      "summary": "Our first responsibility is to the patients, doctors and nurses, parents and everyone who uses our products and services. We must meet their needs with high quality, act quickly and accurately, keep prices reasonable, and be fair to our business partners.",
+      "inPractice": ["Quality and patient safety come first", "Report every potential product complaint promptly", "Deal fairly with suppliers and distributors"]
+    },
+    {
+      "id": "employees",
+      "title": "Our employees",
+      "summary": "We are responsible to the people who work with us. That means respect and dignity, a safe and inclusive workplace, fair pay, support for health and families, and opportunities to develop – with leaders who are capable and act ethically.",
+      "inPractice": ["Keep yourself and others safe", "Treat every colleague with respect", "Speak up and listen"]
+    },
+    {
+      "id": "communities",
+      "title": "Our communities",
+      "summary": "We are responsible to the communities where we live and work, and to the world community. We aim to be good citizens, support better health and access to care, and protect the environment and natural resources.",
+      "inPractice": ["Reduce waste and energy use at our site", "Volunteer and support local health", "Follow environmental rules strictly"]
+    },
+    {
+      "id": "stockholders",
+      "title": "Our stockholders",
+      "summary": "Our final responsibility is to our stockholders. The business must make a sound profit, invest in research and new ideas, and build reserves for difficult times. When we operate by these principles, stockholders should realise a fair return.",
+      "inPractice": ["Use company resources wisely", "Invest time in innovation and improvement", "Make decisions for the long term"]
+    }
+  ],
+  "checkpoint": {
+    "question": "According to Our Credo, who comes first?",
+    "options": ["Our stockholders", "Our employees", "Patients, doctors, nurses and all who use our products and services", "Our communities"],
+    "answer": 2,
+    "explanation": "Our Credo lists patients, doctors, nurses and everyone who uses our products and services first."
+  }
+}
