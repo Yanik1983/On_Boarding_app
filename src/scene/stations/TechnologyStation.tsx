@@ -143,7 +143,6 @@ function HeartBench() {
   const geometry = useMemo(() => {
     const g = new ExtrudeGeometry(heartShape(), { depth: 0.4, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.1, bevelSegments: 10, curveSegments: 64 })
     g.center()
-    g.rotateZ(Math.PI)
     return g
   }, [])
 
@@ -155,7 +154,7 @@ function HeartBench() {
         uniforms: {
           uTime: { value: 0 },
           uMode: { value: 0 },
-          uBase: { value: new Color('#9c2a2a').convertSRGBToLinear() },
+          uBase: { value: new Color('#b83434').convertSRGBToLinear() },
           uWave: { value: new Color('#ffd166').convertSRGBToLinear() },
           uLesion: { value: new Color('#1b1f24').convertSRGBToLinear() },
         },
@@ -350,7 +349,7 @@ export function TechnologyStation({ station }: { station: StationOf<'technology'
         <cylinderGeometry args={[5.6, 5.7, 0.24, 64]} />
         <meshStandardMaterial color="#ffffff" roughness={0.35} />
       </mesh>
-      {(shown === 'heart' || shown === 'knee') && (
+      {shown === 'knee' && (
         <mesh position={[0, 0.4, 0]} castShadow receiveShadow>
           <cylinderGeometry args={[0.9, 1.1, 0.4, 48]} />
           <meshStandardMaterial {...METAL} />

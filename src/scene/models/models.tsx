@@ -42,7 +42,7 @@ export function HeartModel({ color = '#d51900', depth = 0.34 }: { color?: string
     return g
   }, [depth])
   return (
-    <mesh geometry={geometry} rotation-z={Math.PI} castShadow>
+    <mesh geometry={geometry} castShadow>
       <meshPhysicalMaterial color={color} roughness={0.25} clearcoat={1} clearcoatRoughness={0.15} />
     </mesh>
   )

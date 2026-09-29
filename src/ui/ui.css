@@ -1,6 +1,6 @@
 /* Root size scales with the screen so the interface stays proportional from laptops to 4K displays. */
 html {
-  font-size: clamp(14px, 0.42vw + 9.5px, 26px);
+  font-size: clamp(14px, 0.9vw, 36px);
 }
 
 *,

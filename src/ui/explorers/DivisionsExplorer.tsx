@@ -12,7 +12,7 @@ export function DivisionsExplorer({ station }: { station: StationOf<'divisions'>
       <Hint>Choose a business unit, or click a pod in the 3D scene.</Hint>
       <Chips label="Business units">
         {station.units.map((u, i) => (
-          <Chip key={u.id} color={u.color} active={selected === u.id} onClick={() => select(u.id, focusOn(podFocusPoint(podPosition(i, count)), 5.8, 1.2))}>
+          <Chip key={u.id} color={u.color} active={selected === u.id} onClick={() => select(u.id, focusOn(podFocusPoint(podPosition(i, count)), 8.5, 1.8))}>
             {u.name}
           </Chip>
         ))}

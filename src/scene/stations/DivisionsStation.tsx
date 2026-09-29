@@ -36,7 +36,7 @@ function Pod({ unit, index, count }: { unit: Unit; index: number; count: number 
         {...bind}
         onClick={(e) => {
           e.stopPropagation()
-          select(unit.id, focusOn(podFocusPoint(position), 5.8, 1.2))
+          select(unit.id, focusOn(podFocusPoint(position), 8.5, 1.8))
         }}
       >
         <mesh position={[0, -1.25, 0]} receiveShadow castShadow>

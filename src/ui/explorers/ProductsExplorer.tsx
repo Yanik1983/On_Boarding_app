@@ -48,7 +48,7 @@ export function ProductsExplorer({ station }: { station: StationOf<'products'> }
             <button
               className={selected === p.id ? 'active' : ''}
               aria-pressed={selected === p.id}
-              onClick={() => select(p.id, focusOn(pedestalFocusPoint(pedestalPosition(i, visible.length), scale), 3.4 + scale * 1.4, 0.8))}
+              onClick={() => select(p.id, focusOn(pedestalFocusPoint(pedestalPosition(i, visible.length), scale), 4.5 + scale * 3, 1.2))}
             >
               <span className="chip-dot" style={{ background: unitOf(p.unit)?.color }} aria-hidden />
               {p.name}

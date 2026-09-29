@@ -33,7 +33,7 @@ function Pedestal({ product, position, color, scale }: { product: Product; posit
       {...bind}
       onClick={(e) => {
         e.stopPropagation()
-        select(product.id, focusOn(pedestalFocusPoint(position, scale), 3.4 + scale * 1.4, 0.8))
+        select(product.id, focusOn(pedestalFocusPoint(position, scale), 4.5 + scale * 3, 1.2))
       }}
     >
       <mesh position={[0, 0.45, 0]} castShadow receiveShadow>
@@ -48,7 +48,7 @@ function Pedestal({ product, position, color, scale }: { product: Product; posit
         <coneGeometry args={[0.75, 3, 32, 1, true]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={isSelected ? 0.1 : 0.045} depthWrite={false} blending={AdditiveBlending} />
       </mesh>
-      <group ref={model} position={[0, 1.65, 0]} scale={isSelected ? 0.95 : hovered ? 0.85 : 0.78}>
+      <group ref={model} position={[0, 1.65, 0]} scale={isSelected ? 1.15 : hovered ? 1.02 : 0.95}>
         <ProductModel type={product.model} />
       </group>
       <Label position={[0, 0.5, 0.6]} fontSize={0.14} maxWidth={1.3} textAlign="center" color={isSelected ? color : '#1b1f24'}>
