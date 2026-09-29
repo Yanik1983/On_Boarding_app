@@ -64,7 +64,14 @@ export function StationPanel({ station, index, collapsible }: { station: Station
     body.current?.scrollTo({ top: 0 })
   }, [step])
 
-  const hint = station.kind === 'welcome' ? 'Enter your name to start' : steps.some((s) => s.type === 'checkpoint') ? 'Answer the quick check to continue' : 'Complete this station to continue'
+  // Stations without a quick-check question are completed by reaching their last page.
+  // (Welcome completes with the name form, the final station with the knowledge check.)
+  const completesOnLastPage = !station.checkpoint && station.kind !== 'welcome' && station.kind !== 'finish'
+  useEffect(() => {
+    if (completesOnLastPage && step === steps.length - 1 && !completed) useStore.getState().completeStation(station.id)
+  }, [completesOnLastPage, step, steps.length, completed, station.id])
+
+  const hint = station.kind === 'welcome' ? 'Enter your name to start' : steps.some((s) => s.type === 'checkpoint') ? 'Answer the quick check to continue' : 'Go through all pages to continue'
 
   return (
     <aside

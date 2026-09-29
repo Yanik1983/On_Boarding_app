@@ -8,7 +8,7 @@ It needs no installation and no internet connection.
 
 ## The journey
 
-The new employee travels along a path through nine stations. Each station has short content cards, an interactive 3D "explore" page and a quick check question that unlocks the next station.
+The new employee travels along a path through nine stations. Each station has short content cards and an interactive 3D "explore" page; going through all its pages unlocks the next station. The journey ends with a knowledge check.
 
 | # | Station | What you explore |
 |---|---------|------------------|
@@ -54,13 +54,14 @@ Things you will want to fill in:
 
 - **`"officialText"`** in the Credo station – paste the official Credo text from jnj.com or your internal source.
 - **The Our Site station** – everything in `[brackets]` is a placeholder: site name, location, story, buildings (positions from -5 to 5 across and -3.5 to 3.5 deep), hotspots, contacts and checklist.
+- **`"checkpoint"`** (optional) – add a quick multiple-choice question to any station; the next station then unlocks only after a correct answer. Copy the format of a question in the Knowledge Check station and add `"explanation"` for the feedback text.
 - **`"status"`** – change from `"draft"` to `"approved"` once Communications / Legal / Regulatory have reviewed a station.
 
 For larger changes, developers can edit the source files in `src/content/` and rebuild. A build validates the content and fails with a clear message if something is wrong.
 
 ## Useful links
 
-Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.1.0.html?preview`:
+Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.2.0.html?preview`:
 
 | Option | Effect |
 |--------|--------|

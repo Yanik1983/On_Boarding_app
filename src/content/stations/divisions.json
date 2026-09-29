@@ -77,11 +77,5 @@
       ],
       "note": "In October 2025 J&J announced its intent to separate the Orthopaedics business into a standalone company operating as DePuy Synthes, targeted within 18–24 months. Check with your manager for the latest status."
     }
-  ],
-  "checkpoint": {
-    "question": "Which business unit includes electrophysiology and heart pumps?",
-    "options": ["Surgery", "Vision", "Cardiovascular", "Orthopaedics"],
-    "answer": 2,
-    "explanation": "Electrophysiology, Heart Recovery (Abiomed) and Shockwave are part of Cardiovascular."
-  }
+  ]
 }

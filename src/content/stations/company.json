@@ -42,11 +42,5 @@
     { "year": "2024", "title": "Shockwave Medical joins", "text": "Intravascular lithotripsy expands Cardiovascular into coronary and peripheral artery disease." },
     { "year": "2025", "title": "Orthopaedics separation announced", "text": "J&J announces its intent to separate the Orthopaedics business as a standalone company operating as DePuy Synthes." },
     { "year": "2026", "title": "Business-unit-led MedTech", "text": "J&J MedTech moves to a business-unit-led operating model worldwide." }
-  ],
-  "checkpoint": {
-    "question": "Which two areas does Johnson & Johnson focus on today?",
-    "options": ["Consumer Health and MedTech", "Innovative Medicine and MedTech", "Pharmacy retail and Hospitals", "Innovative Medicine and Consumer Health"],
-    "answer": 1,
-    "explanation": "Since the separation of Consumer Health (Kenvue) in 2023, J&J focuses on Innovative Medicine and MedTech."
-  }
+  ]
 }

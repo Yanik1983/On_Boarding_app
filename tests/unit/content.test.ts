@@ -44,11 +44,11 @@ describe('content', () => {
     const broken = structuredClone(raw) as { stations: Record<string, unknown>[] }
     const products = broken.stations.find((s) => s.id === 'products') as { products: { unit: string }[] }
     products.products[0].unit = 'unknown-unit'
-    const credo = broken.stations.find((s) => s.id === 'credo') as { checkpoint: { answer: number } }
-    credo.checkpoint.answer = 9
+    const finish = broken.stations.find((s) => s.id === 'finish') as { questions: { answer: number }[] }
+    finish.questions[0].answer = 9
     const problems = validateRawContent(broken)
     expect(problems.some((p) => p.includes('station "products"') && p.includes('unknown business unit'))).toBe(true)
-    expect(problems.some((p) => p.includes('station "credo"') && p.includes('answer'))).toBe(true)
+    expect(problems.some((p) => p.includes('station "finish"') && p.includes('answer'))).toBe(true)
   })
 
   it('reports invalid JSON', () => {

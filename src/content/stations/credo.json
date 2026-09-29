@@ -55,11 +55,5 @@
       "summary": "Our final responsibility is to our stockholders. The business must make a sound profit, invest in research and new ideas, and build reserves for difficult times. When we operate by these principles, stockholders should realise a fair return.",
       "inPractice": ["Use company resources wisely", "Invest time in innovation and improvement", "Make decisions for the long term"]
     }
-  ],
-  "checkpoint": {
-    "question": "According to Our Credo, who comes first?",
-    "options": ["Our stockholders", "Our employees", "Patients, doctors, nurses and all who use our products and services", "Our communities"],
-    "answer": 2,
-    "explanation": "Our Credo lists patients, doctors, nurses and everyone who uses our products and services first."
-  }
+  ]
 }

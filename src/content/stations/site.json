@@ -63,16 +63,5 @@
     { "id": "buddy", "text": "Meet my onboarding buddy" },
     { "id": "manager", "text": "Agree first goals with my manager" },
     { "id": "training", "text": "Start my required training in the learning system" }
-  ],
-  "checkpoint": {
-    "question": "You notice a near miss (nobody was hurt). What should you do?",
-    "options": [
-      "Nothing – nobody was hurt",
-      "Report it straight away to your manager or EHS",
-      "Mention it at your annual review",
-      "Post a photo on social media"
-    ],
-    "answer": 1,
-    "explanation": "Near misses are reported immediately – they help us prevent real injuries."
-  }
+  ]
 }

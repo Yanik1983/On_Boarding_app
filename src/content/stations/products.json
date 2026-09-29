@@ -33,16 +33,5 @@
     { "id": "tecnis", "name": "TECNIS intraocular lenses", "unit": "vision", "model": "iol", "what": "Artificial lenses implanted during cataract surgery to replace the eye's clouded natural lens.", "who": "Patients having cataract surgery, and their eye surgeons.", "technology": "Optical designs including monofocal, extended depth of focus and multifocal lenses." },
     { "id": "attune", "name": "ATTUNE Knee System", "unit": "orthopaedics", "model": "knee-implant", "what": "A total knee replacement system of implants and instruments.", "who": "Patients with severe knee arthritis, and orthopaedic surgeons.", "technology": "Implant geometry and materials designed for motion and stability, plus precise instruments." },
     { "id": "velys", "name": "VELYS Robotic-Assisted Solution", "unit": "orthopaedics", "model": "robot", "what": "A robotic-assisted system that helps surgeons plan and carry out knee replacement procedures.", "who": "Orthopaedic surgeons and patients having knee replacement.", "technology": "Robotics, camera-based tracking and data-driven surgical planning." }
-  ],
-  "checkpoint": {
-    "question": "How does Shockwave intravascular lithotripsy (IVL) help open a calcified artery?",
-    "options": [
-      "It dissolves calcium with medicine",
-      "It uses sound pressure waves to crack the calcium",
-      "It freezes the artery wall",
-      "It removes the artery"
-    ],
-    "answer": 1,
-    "explanation": "IVL creates sonic pressure waves inside a balloon that crack calcium so the vessel can be opened."
-  }
+  ]
 }

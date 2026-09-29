@@ -10,7 +10,6 @@ interface Station {
   id: string
   kind: string
   title: string
-  checkpoint?: { options: string[]; answer: number }
   questions?: { options: string[]; answer: number }[]
 }
 
@@ -53,15 +52,15 @@ test('a new employee can complete the whole journey offline', async ({ page }) =
   await nameField.fill('Alex Tester')
   await page.getByRole('button', { name: /Start my journey/ }).click()
 
+  // Every other station unlocks the next one once all its pages have been seen.
   for (const station of stations.slice(1, -1)) {
     await expect(page.locator('#panel-title')).toHaveText(station.title)
-    const check = page.getByRole('button', { name: 'Check answer' })
-    await nextUntil(page, () => check.isVisible())
-    const correct = station.checkpoint!.options[station.checkpoint!.answer]
-    await page.locator('.checkpoint .option', { hasText: correct }).first().click()
-    await check.click()
-    await expect(page.getByText('Correct!')).toBeVisible()
-    await page.getByRole('button', { name: /^Continue to/ }).click()
+    const next = page.locator('.journey').getByRole('button', { name: 'Next station' })
+    await expect(next).toBeDisabled()
+    const proceed = page.getByRole('button', { name: /^Continue to/ })
+    await nextUntil(page, () => proceed.isVisible())
+    await expect(page.locator('.done-chip')).toBeVisible()
+    await proceed.click()
   }
 
   // Knowledge check.

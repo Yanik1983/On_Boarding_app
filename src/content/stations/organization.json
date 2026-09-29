@@ -39,16 +39,5 @@
     { "id": "ehs", "name": "Environment, Health & Safety", "lane": "support", "role": "Keeps people safe at work and protects the environment.", "teams": ["Safety", "Occupational health", "Environment & sustainability"], "workWith": "Everyone on site – especially labs and production." }
   ],
   "flow": ["rnd", "quality", "clinical", "regulatory", "operations", "commercial"],
-  "flowEndLabel": "Patients",
-  "checkpoint": {
-    "question": "What does a business-unit-led operating model mean?",
-    "options": [
-      "Every decision is made at global headquarters",
-      "Business units own their strategy and results end to end",
-      "Each country works completely on its own",
-      "Support functions decide on product strategy"
-    ],
-    "answer": 1,
-    "explanation": "Business units lead end to end, with functions partnering with them – fewer layers, faster decisions."
-  }
+  "flowEndLabel": "Patients"
 }

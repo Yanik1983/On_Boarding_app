@@ -73,16 +73,5 @@
     { "id": "approval", "title": "Regulatory approval", "text": "Submit evidence to authorities – e.g. FDA or an EU notified body – to obtain clearance or approval." },
     { "id": "manufacturing", "title": "Manufacturing", "text": "Transfer the design to production with validated processes and controlled suppliers." },
     { "id": "postmarket", "title": "Post-market", "text": "Monitor real-world performance, handle complaints, and improve the product." }
-  ],
-  "checkpoint": {
-    "question": "What is the difference between verification and validation?",
-    "options": [
-      "They are two words for the same test",
-      "Verification checks requirements are met; validation checks user needs are met",
-      "Verification is done by the FDA; validation by the manufacturer",
-      "Validation happens only after the product is on the market"
-    ],
-    "answer": 1,
-    "explanation": "Verification: did we build the product right? Validation: did we build the right product?"
-  }
+  ]
 }
