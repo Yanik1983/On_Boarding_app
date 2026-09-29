@@ -1,0 +1,78 @@
+{
+  "id": "site",
+  "kind": "site",
+  "title": "Our Site",
+  "subtitle": "Your new workplace",
+  "color": "#2e7d32",
+  "minutes": 5,
+  "status": "draft",
+  "sources": [],
+  "cards": [
+    {
+      "title": "Welcome to [Site name]",
+      "body": "[Placeholder – replace with your site's story: when it opened, how many people work here, and what makes it special.]\n\nExplore the 3D campus map: click a pin to learn about each area."
+    },
+    {
+      "title": "What we do here",
+      "body": "[Placeholder – describe the site's role in the J&J MedTech network, e.g. which business unit it belongs to, and whether it focuses on R&D, manufacturing, distribution or commercial work.]"
+    },
+    {
+      "title": "Safety first",
+      "body": "Safety is part of Our Credo. Please read the site safety essentials in the Explore section and complete your EHS induction in your first week.",
+      "bullets": [
+        "Report every injury, near miss or unsafe condition – straight away.",
+        "Know your nearest emergency exit and the assembly point."
+      ]
+    }
+  ],
+  "siteName": "[Site name]",
+  "location": "[City, Country]",
+  "role": "[Placeholder – e.g. R&D and manufacturing site for the Cardiovascular business unit]",
+  "buildings": [
+    { "id": "reception", "name": "Reception & Offices", "x": -3.2, "z": 1.6, "width": 2.6, "depth": 1.6, "height": 1.4, "color": "#e6ebf1" },
+    { "id": "labs", "name": "R&D Labs", "x": -3.2, "z": -1.6, "width": 2.6, "depth": 2.2, "height": 1.1, "color": "#dce7f5" },
+    { "id": "production", "name": "Production (clean rooms)", "x": 0.6, "z": -1.4, "width": 3.4, "depth": 2.6, "height": 0.9, "color": "#f1ecdf" },
+    { "id": "warehouse", "name": "Warehouse & Logistics", "x": 3.6, "z": -1.4, "width": 1.8, "depth": 2.6, "height": 1.2, "color": "#e9e3ef" },
+    { "id": "cafeteria", "name": "Cafeteria", "x": 0.4, "z": 1.9, "width": 2.0, "depth": 1.3, "height": 0.6, "color": "#fbe9e7" }
+  ],
+  "hotspots": [
+    { "id": "reception", "name": "Reception", "x": -3.2, "z": 2.6, "text": "Pick up your badge here on your first day. [Placeholder – opening hours, visitor rules.]" },
+    { "id": "labs", "name": "R&D Labs", "x": -3.2, "z": -0.3, "text": "Where our engineers and scientists develop and test new products. Lab coats and safety glasses required. [Placeholder]" },
+    { "id": "production", "name": "Clean rooms", "x": 0.6, "z": -0.1, "text": "Controlled environment for manufacturing. Enter only after gowning training, following the posted gowning procedure. [Placeholder]" },
+    { "id": "cafeteria", "name": "Cafeteria", "x": 0.4, "z": 2.8, "text": "Breakfast and lunch. [Placeholder – hours and menu info.]" },
+    { "id": "assembly", "name": "Emergency assembly point", "x": 4.2, "z": 2.8, "text": "In an alarm, leave by the nearest exit and go here. Do not use lifts. Wait for the roll call. [Placeholder – confirm location.]" },
+    { "id": "parking", "name": "Parking", "x": 2.7, "z": 0.3, "text": "Employee parking and bicycle stands. [Placeholder – permits, EV charging.]" }
+  ],
+  "safety": [
+    "Wear your badge visibly at all times.",
+    "Follow the PPE rules posted at each area (safety glasses, lab coat, safety shoes).",
+    "Clean rooms: enter only after gowning training.",
+    "Report injuries, near misses and unsafe conditions immediately to your manager or EHS.",
+    "In an emergency: leave by the nearest exit, go to the assembly point, do not use lifts."
+  ],
+  "contacts": [
+    { "role": "HR / Onboarding", "name": "[Name]", "contact": "[email or extension]" },
+    { "role": "EHS", "name": "[Name]", "contact": "[email or extension]" },
+    { "role": "IT service desk", "name": "[Team]", "contact": "[phone or portal]" },
+    { "role": "Security / Emergency", "name": "[Team]", "contact": "[emergency number]" }
+  ],
+  "checklist": [
+    { "id": "badge", "text": "Collect my badge and access rights" },
+    { "id": "laptop", "text": "Set up my laptop and accounts" },
+    { "id": "ehs", "text": "Complete the EHS site induction" },
+    { "id": "buddy", "text": "Meet my onboarding buddy" },
+    { "id": "manager", "text": "Agree first goals with my manager" },
+    { "id": "training", "text": "Start my required training in the learning system" }
+  ],
+  "checkpoint": {
+    "question": "You notice a near miss (nobody was hurt). What should you do?",
+    "options": [
+      "Nothing – nobody was hurt",
+      "Report it straight away to your manager or EHS",
+      "Mention it at your annual review",
+      "Post a photo on social media"
+    ],
+    "answer": 1,
+    "explanation": "Near misses are reported immediately – they help us prevent real injuries."
+  }
+}

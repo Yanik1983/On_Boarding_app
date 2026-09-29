@@ -1,0 +1,26 @@
+/*
+  Design tokens. Neutral clinical theme with a red accent.
+  Replace these values (and add brand fonts) once brand-approved assets are available.
+*/
+:root {
+  --accent: #d51900;
+  --brand: #d51900;
+  --ink: #16191d;
+  --ink-2: #3d4550;
+  --muted: #5d6671;
+  --line: #dde2e8;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-solid: #ffffff;
+  --surface-2: #f4f6f9;
+  --bg: #eef1f5;
+  --good: #1f7a45;
+  --good-bg: #e7f5ec;
+  --bad: #b3261e;
+  --bad-bg: #fdecea;
+  --focus: #1f6feb;
+  --radius: 1rem;
+  --radius-sm: 0.6rem;
+  --shadow: 0 1.2rem 3rem rgba(22, 25, 29, 0.14), 0 0.2rem 0.6rem rgba(22, 25, 29, 0.06);
+  --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}

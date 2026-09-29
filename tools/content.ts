@@ -3,7 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ContentSchema, formatIssues } from '../src/content/schema'
+import { ContentSchema, formatIssues } from '../src/content/schema.ts'
 
 export const CONTENT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src/content')
 
@@ -12,7 +12,7 @@ function readJson(relative: string): unknown {
   try {
     return JSON.parse(fs.readFileSync(file, 'utf8'))
   } catch (error) {
-    throw new Error(`Could not read content file ${relative}: ${(error as Error).message}`)
+    throw new Error(`Could not read content file ${relative}: ${(error as Error).message}`, { cause: error })
   }
 }
 

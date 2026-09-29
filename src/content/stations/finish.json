@@ -1,0 +1,37 @@
+{
+  "id": "finish",
+  "kind": "finish",
+  "title": "Knowledge Check",
+  "subtitle": "Finish your journey",
+  "color": "#d51900",
+  "minutes": 5,
+  "status": "draft",
+  "sources": [],
+  "cards": [
+    {
+      "title": "Almost there",
+      "body": "Let's check what you have learned. Answer the questions in the next step – you need 80% to receive your certificate. You can try as many times as you like."
+    }
+  ],
+  "passMark": 0.8,
+  "questions": [
+    { "question": "In which year was Our Credo written?", "options": ["1886", "1943", "1987", "2023"], "answer": 1 },
+    { "question": "According to Our Credo, who comes first?", "options": ["Stockholders", "Employees", "Patients, doctors, nurses and all who use our products and services", "Communities"], "answer": 2 },
+    { "question": "Which two areas does Johnson & Johnson focus on today?", "options": ["Innovative Medicine and MedTech", "Consumer Health and MedTech", "Hospitals and Pharmacies", "Consumer Health and Innovative Medicine"], "answer": 0 },
+    { "question": "Which business unit includes electrophysiology, heart pumps and Shockwave?", "options": ["Surgery", "Cardiovascular", "Vision", "Orthopaedics"], "answer": 1 },
+    { "question": "In October 2025, J&J announced its intent to separate which business?", "options": ["Vision", "Surgery", "Orthopaedics (DePuy Synthes)", "Cardiovascular"], "answer": 2 },
+    { "question": "What does the business-unit-led operating model mean?", "options": ["Business units own strategy and results end to end", "Every decision is made at headquarters", "Countries work independently", "Functions decide product strategy"], "answer": 0 },
+    { "question": "Which standard describes quality management systems for medical devices?", "options": ["ISO 9001", "ISO 13485", "ISO 27001", "ISO 50001"], "answer": 1 },
+    { "question": "Validation answers which question?", "options": ["Did we build the product right?", "Did we build the right product for the users' needs?", "Is the price right?", "Is the packaging nice?"], "answer": 1 },
+    { "question": "Which lens corrects nearsightedness (myopia)?", "options": ["A converging (plus) lens", "A diverging (minus) lens", "A flat window", "No lens can help"], "answer": 1 },
+    { "question": "A customer mentions a possible problem with one of our products. What do you do?", "options": ["Wait to see if it happens again", "Report it promptly as a potential complaint, following our procedure", "Tell them to contact a competitor", "Ignore it if you are not in Quality"], "answer": 1 },
+    { "question": "You see a near miss at the site. What should you do?", "options": ["Nothing", "Report it straight away", "Wait for the annual review", "Fix it and tell no one"], "answer": 1 }
+  ],
+  "nextSteps": [
+    "Complete your required training in the learning system.",
+    "Meet your onboarding buddy and your manager's team.",
+    "Keep this file – you can revisit any station at any time."
+  ],
+  "certificateTitle": "Certificate of Completion",
+  "certificateText": "has completed the J&J MedTech New Employee Journey, covering our company, Our Credo, our business units, our organisation, medical technology fundamentals, our products and our site."
+}

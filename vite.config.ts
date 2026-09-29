@@ -4,7 +4,7 @@ import path from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import { viteSingleFile } from 'vite-plugin-singlefile'
-import { CONTENT_DIR, readRawContent, renderContentBlock, validateRawContent } from './tools/content'
+import { CONTENT_DIR, readRawContent, renderContentBlock, validateRawContent } from './tools/content.ts'
 
 /** Embeds the editable content block into index.html (dev and build). */
 function onboardingContent(isBuild: boolean): Plugin {
