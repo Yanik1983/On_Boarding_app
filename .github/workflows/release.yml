@@ -1,13 +1,23 @@
 name: Release
 
-# Push a tag such as v0.1.0 to build the single HTML file and publish it as a GitHub release.
+# Publishes the single HTML file as a GitHub release. Either push a tag such as v0.1.0, or run
+# this workflow manually (Actions tab > Release > Run workflow) and enter the version; the tag is
+# then created for you. The version must match "version" in src/content/meta.json.
 on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish, e.g. v0.1.0
+        required: true
 
 permissions:
   contents: write
+
+env:
+  VERSION: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.ref_name }}
 
 jobs:
   release:
@@ -23,11 +33,13 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-      - name: Check the file version matches the tag
-        run: test -f "dist/JnJ-MedTech-Onboarding-${GITHUB_REF_NAME}.html"
+      - name: Check the file version matches the release version
+        run: test -f "dist/JnJ-MedTech-Onboarding-${VERSION}.html"
       - uses: softprops/action-gh-release@v2
         with:
-          name: New Employee Journey ${{ github.ref_name }}
-          body_path: release-notes/${{ github.ref_name }}.md
-          files: dist/JnJ-MedTech-Onboarding-${{ github.ref_name }}.html
+          tag_name: ${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
+          name: New Employee Journey ${{ env.VERSION }}
+          body_path: release-notes/${{ env.VERSION }}.md
+          files: dist/JnJ-MedTech-Onboarding-${{ env.VERSION }}.html
           fail_on_unmatched_files: true
