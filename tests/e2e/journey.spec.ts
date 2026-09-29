@@ -52,6 +52,13 @@ test('a new employee can complete the whole journey offline', async ({ page }) =
   await nameField.fill('Alex Tester')
   await page.getByRole('button', { name: /Start my journey/ }).click()
 
+  // Back on the first page of a station returns to the previous station's last page.
+  await expect(page.locator('#panel-title')).toHaveText(stations[1].title)
+  await page.getByRole('button', { name: `Back to ${stations[0].title}` }).click()
+  await expect(page.locator('#panel-title')).toHaveText(stations[0].title)
+  await expect(nameField).toHaveValue('Alex Tester')
+  await page.getByRole('button', { name: /^Continue to/ }).click()
+
   // Every other station unlocks the next one once all its pages have been seen.
   for (const station of stations.slice(1, -1)) {
     await expect(page.locator('#panel-title')).toHaveText(station.title)

@@ -6,6 +6,7 @@ import { getSteps } from '../lib/steps'
 import { canVisit, useStore } from '../state/store'
 import { Checkpoint } from './Checkpoint'
 import { Explorer } from './explorers/Explorer'
+import { goToPreviousStation } from './navigation'
 import { CheckIcon, ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from './icons'
 
 function Paragraphs({ text }: { text: string }) {
@@ -52,6 +53,7 @@ export function StationPanel({ station, index, collapsible }: { station: Station
   const completed = useStore((s) => s.completed.includes(station.id))
   const canGoNext = useStore((s) => canVisit(s, index + 1))
   const nextStation = stations[index + 1]
+  const previousStation = stations[index - 1]
   const body = useRef<HTMLDivElement>(null)
   const panel = useRef<HTMLElement>(null)
   const sheetCollapsed = useStore((s) => s.sheetCollapsed)
@@ -161,7 +163,13 @@ export function StationPanel({ station, index, collapsible }: { station: Station
       </div>
 
       <footer className="panel-footer">
-        <button className="button secondary" onClick={() => setStep(step - 1)} disabled={step === 0}>
+        <button
+          className="button secondary"
+          onClick={() => (step > 0 ? setStep(step - 1) : goToPreviousStation(stations))}
+          disabled={step === 0 && !previousStation}
+          aria-label={step === 0 && previousStation ? `Back to ${previousStation.title}` : undefined}
+          title={step === 0 && previousStation ? `Back to ${previousStation.title}` : undefined}
+        >
           <ChevronLeft /> Back
         </button>
         {step < steps.length - 1 ? (

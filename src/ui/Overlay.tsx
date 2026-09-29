@@ -6,6 +6,7 @@ import { canVisit, useStore } from '../state/store'
 import { PrintCertificate } from './Certificate'
 import { GearIcon, MenuIcon } from './icons'
 import { JourneyBar } from './JourneyBar'
+import { goToPreviousStation } from './navigation'
 import { Settings } from './Settings'
 import { StationMenu } from './StationMenu'
 import { StationPanel } from './StationPanel'
@@ -38,7 +39,7 @@ function useKeyboard() {
       } else if (step > 0) {
         store.setStep(station.id, step - 1)
       } else {
-        store.prev()
+        goToPreviousStation(content.stations)
       }
       event.preventDefault()
     }
