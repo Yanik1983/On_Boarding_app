@@ -3,6 +3,7 @@ import { useContent } from '../content/context'
 import { isDraft } from '../content/load'
 import { firstName, initials } from '../lib/personalize'
 import { getSteps } from '../lib/steps'
+import { usePerf } from '../state/perf'
 import { canVisit, useStore } from '../state/store'
 import { PrintCertificate } from './Certificate'
 import { GearIcon, MenuIcon } from './icons'
@@ -67,6 +68,28 @@ function Toast() {
   )
 }
 
+/** Shown when the browser draws 3D in software (graphics acceleration off, remote desktop, virtual machine). */
+function SoftwareRenderingNotice() {
+  const { software, noticeDismissed } = usePerf()
+  if (!software || noticeDismissed) return null
+  return (
+    <div className="notice perf-notice" role="status">
+      <p>
+        <strong>3D is running without graphics acceleration</strong>, so it may feel slow. In Edge or Chrome open Settings › System and turn on{' '}
+        <em>Use graphics acceleration when available</em>, then restart the browser. On a remote desktop, open the file on your own laptop instead.
+      </p>
+      <div className="row">
+        <button className="button small primary" onClick={() => useStore.getState().setTextOnly(true)}>
+          Switch to text-only mode
+        </button>
+        <button className="button small secondary" onClick={() => usePerf.getState().set({ noticeDismissed: true })}>
+          Keep 3D
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function NameChip() {
   const name = useStore((s) => s.name)
   if (!name.trim()) return null
@@ -113,6 +136,7 @@ export function Overlay({ notice, show3d }: { notice: keyof typeof notices | nul
           </button>
         </div>
       </header>
+      {show3d && <SoftwareRenderingNotice />}
       {notice && (
         <p className="notice" role="status">
           {notices[notice]}

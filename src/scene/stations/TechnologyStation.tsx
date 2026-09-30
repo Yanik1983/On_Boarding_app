@@ -20,6 +20,7 @@ function OpticsBench() {
   const eye = useStore((s) => s.lab.eye)
   const power = useStore((s) => s.lab.lensPower)
   const optics = useMemo(() => computeOptics(eye, power), [eye, power])
+  const rayPoints = useMemo(() => optics.rays.map((ray) => ray.points.map(([x, y]) => [x, y, 0] as [number, number, number])), [optics])
   const corrector = useMemo(() => lensGeometry(power / 3, 0.95), [power])
   const crystalline = useMemo(() => lensGeometry(1.1, 0.42), [])
   const sharp = optics.state === 'sharp'
@@ -48,8 +49,8 @@ function OpticsBench() {
       <mesh geometry={crystalline} position={[OPTICS.eyeLensX, 0, 0]}>
         <meshPhysicalMaterial color="#f6e7b0" transparent opacity={0.8} roughness={0.1} clearcoat={1} />
       </mesh>
-      {optics.rays.map((ray, i) => (
-        <Line key={i} points={ray.points.map(([x, y]) => [x, y, 0] as [number, number, number])} color="#ffb000" lineWidth={2.6} />
+      {rayPoints.map((points, i) => (
+        <Line key={i} points={points} color="#ffb000" lineWidth={2.6} />
       ))}
       {optics.focusX !== null && (
         <mesh position={[optics.focusX, 0, 0]}>
@@ -279,6 +280,7 @@ function LifecycleBench({ stages, color }: { stages: StationOf<'technology'>['li
     return [-5 + t * 10, 1 + Math.sin(t * Math.PI) * 1.4, -Math.sin(t * Math.PI) * 1.5] as [number, number, number]
   })
   const curve = useMemo(() => new CatmullRomCurve3(positions.map((p) => new Vector3(...p))), [positions.length]) // eslint-disable-line react-hooks/exhaustive-deps
+  const linePoints = useMemo(() => curve.getPoints(100), [curve])
 
   useFrame((state) => {
     if (!token.current || !active) return
@@ -289,7 +291,7 @@ function LifecycleBench({ stages, color }: { stages: StationOf<'technology'>['li
 
   return (
     <group position={[0, 0.3, 0.5]}>
-      <Line points={curve.getPoints(100)} color={color} lineWidth={3} />
+      <Line points={linePoints} color={color} lineWidth={3} />
       {stages.map((s, i) => (
         <LifecycleStage
           key={s.id}

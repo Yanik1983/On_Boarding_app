@@ -1,35 +1,27 @@
 import { Bloom, EffectComposer, N8AO, SMAA, ToneMapping, Vignette } from '@react-three/postprocessing'
 import { ToneMappingMode } from 'postprocessing'
-import { isHandheld } from '../lib/responsive'
-import type { QualityLevel } from './Scene'
+import type { Tier } from '../state/perf'
 
 /**
- * Post-processing by quality level (see Scene): ambient occlusion (soft contact shading that gives
- * shapes depth), anti-aliasing, a subtle glow on light elements and neutral tone mapping.
+ * Post-processing for the Balanced and Ultra tiers (Smooth renders directly, without this chain).
+ * Balanced uses light single-pass anti-aliasing (SMAA) instead of multisampling, which is much cheaper on
+ * laptop graphics; its ambient occlusion runs at half resolution.
  */
-export function Effects({ level, ultra }: { level: QualityLevel; ultra: boolean }) {
-  if (level >= 2) {
+export function Effects({ tier }: { tier: Exclude<Tier, 'smooth'> }) {
+  if (tier === 'balanced') {
     return (
       <EffectComposer multisampling={0}>
-        <SMAA />
-        <ToneMapping mode={ToneMappingMode.NEUTRAL} />
-      </EffectComposer>
-    )
-  }
-  if (level === 1) {
-    return (
-      <EffectComposer multisampling={4}>
+        <N8AO aoRadius={1.1} distanceFalloff={0.6} intensity={2.4} quality="performance" halfRes />
         <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.45} />
         <ToneMapping mode={ToneMappingMode.NEUTRAL} />
         <Vignette offset={0.35} darkness={0.22} />
+        <SMAA />
       </EffectComposer>
     )
   }
-  const handheld = isHandheld()
   return (
     <EffectComposer multisampling={4}>
-      {/* Half-resolution ambient occlusion is visually identical at this strength and far cheaper. */}
-      <N8AO aoRadius={1.1} distanceFalloff={0.6} intensity={2.4} quality={ultra ? 'high' : handheld ? 'low' : 'medium'} halfRes={!ultra} />
+      <N8AO aoRadius={1.1} distanceFalloff={0.6} intensity={2.4} quality="high" />
       <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.45} />
       <ToneMapping mode={ToneMappingMode.NEUTRAL} />
       <Vignette offset={0.35} darkness={0.22} />

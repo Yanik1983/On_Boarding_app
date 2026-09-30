@@ -2,7 +2,7 @@
 // Each model is roughly 1–1.5 units in size and centred on the origin.
 import { RoundedBox } from '@react-three/drei'
 import { useMemo } from 'react'
-import { CatmullRomCurve3, DoubleSide, ExtrudeGeometry, LatheGeometry, TubeGeometry, Vector2, Vector3 } from 'three'
+import { CatmullRomCurve3, DoubleSide, ExtrudeGeometry, LatheGeometry, ShapeGeometry, TubeGeometry, Vector2, Vector3 } from 'three'
 import type { ProductModel as ProductModelType } from '../../content/schema'
 import type { Vec3 } from '../../state/store'
 import { heartShape } from '../geometry'
@@ -189,6 +189,9 @@ export function KneeModel({ angle = 25 }: { angle?: number }) {
 
 /* ----------------------------------------------------------------- Products */
 
+let screenHeart: ShapeGeometry | null = null
+const screenHeartGeometry = () => (screenHeart ??= new ShapeGeometry(heartShape(), 48))
+
 function MappingSystem() {
   return (
     <group position={[0, -0.12, 0]}>
@@ -210,7 +213,7 @@ function MappingSystem() {
           ['#6bb8ff', 0.18, 0.14],
         ].map(([color, scale, y], i) => (
           <mesh key={i} position={[0, y as number, i * 0.005]} scale={scale as number}>
-            <shapeGeometry args={[heartShape(), 48]} />
+            <primitive object={screenHeartGeometry()} attach="geometry" />
             <meshBasicMaterial color={color as string} toneMapped={false} />
           </mesh>
         ))}

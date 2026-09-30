@@ -74,7 +74,7 @@ export function WelcomeStation({ station }: { station: StationOf<'welcome'> }) {
           <meshPhysicalMaterial
             color={station.color}
             emissive={station.color}
-            emissiveIntensity={0.12}
+            emissiveIntensity={0.2}
             roughness={0.26}
             clearcoat={1}
             clearcoatRoughness={0.06}
@@ -83,7 +83,6 @@ export function WelcomeStation({ station }: { station: StationOf<'welcome'> }) {
           />
         </mesh>
       </group>
-      <pointLight position={[0, 2.8, 1.6]} color={station.color} intensity={4} distance={5} decay={2} />
       <mesh position={[0, 0.12, 0]} receiveShadow castShadow>
         <cylinderGeometry args={[2.9, 3.1, 0.24, 64]} />
         <meshStandardMaterial color="#ffffff" roughness={0.3} />

@@ -31,7 +31,8 @@ Other features:
 
 - **Personal**: the employee's name appears in the top bar, in the 3D welcome and in some card titles, and on the certificate.
 - **Progress is saved** in the browser on that computer, so employees can pause and resume. Nothing is sent anywhere.
-- **Quality settings** (gear icon): *High* (default) renders at the screen's full resolution (up to 3× on phones) and keeps motion smooth automatically: if a computer struggles it first switches off the most expensive effects, and only lowers resolution as a last resort; with spare power it adds extra sharpness. *Auto* may go lower still on very slow computers. *Ultra 4K* renders at least 3840 pixels wide with every effect.
+- **Quality settings** (gear icon): *Auto* (default) checks the computer during the first seconds and picks *Balanced* (sharp, with depth shading and glow) or *Smooth* (lightest), then keeps that setting stable. *Ultra 4K* renders at least 3840 pixels wide with every effect. Settings also shows the frame rate and graphics chip in use.
+- **No graphics acceleration?** Company laptops, remote desktops and virtual machines sometimes run the browser without graphics acceleration, which makes any 3D slow. The app detects this, switches to its lightest mode and explains how to turn acceleration on (Edge/Chrome: Settings › System › *Use graphics acceleration when available*), or offers the text-only mode.
 - **Rendering detail**: ambient occlusion (soft contact shading), high-resolution shadows and reflections, polished and brushed-metal materials, and sharp 3D labels with an outline for legibility.
 - **Phones and tablets**: the text becomes a bottom sheet and the 3D scene moves into the space above it. **Hide text** shrinks the panel to its title and buttons so the 3D fills the screen (this also works on desktop).
 
@@ -64,7 +65,7 @@ For larger changes, developers can edit the source files in `src/content/` and r
 
 ## Useful links
 
-Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.4.0.html?preview`:
+Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.4.1.html?preview`:
 
 | Option | Effect |
 |--------|--------|

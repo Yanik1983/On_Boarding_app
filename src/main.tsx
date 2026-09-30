@@ -19,7 +19,7 @@ if (result.ok) {
     stations.map((s) => s.id),
     { allowFreeOrder: meta.allowFreeOrder, preview: urlOptions.preview },
   )
-  if (urlOptions.quality && ['auto', 'high', 'ultra'].includes(urlOptions.quality)) {
+  if (urlOptions.quality && ['auto', 'smooth', 'balanced', 'ultra'].includes(urlOptions.quality)) {
     store.setQuality(urlOptions.quality as Quality)
   }
   if (urlOptions.textOnly) store.setTextOnly(true)

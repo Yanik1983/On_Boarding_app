@@ -42,7 +42,7 @@ export function Station({ info, number, title, color, children }: Props) {
     <StationContext.Provider value={info}>
       <group position={stationPosition(info.index)} visible={info.visible}>
         <mesh geometry={platform} receiveShadow castShadow>
-          <meshPhysicalMaterial color="#fbfbfc" roughness={0.34} clearcoat={0.35} clearcoatRoughness={0.3} />
+          <meshStandardMaterial color="#fbfbfc" roughness={0.3} />
         </mesh>
         <mesh position={[0, -0.28, 0]} rotation-x={Math.PI / 2}>
           <torusGeometry args={[7.77, 0.03, 12, 192]} />

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware'
 
-export type Quality = 'auto' | 'high' | 'ultra'
+export type Quality = 'auto' | 'smooth' | 'balanced' | 'ultra'
 export type Vec3 = [number, number, number]
 /** Camera override, in coordinates local to the current station. */
 export interface Focus {
@@ -143,7 +143,7 @@ export const useStore = create<State>()(
       allowFreeOrder: false,
       preview: false,
       ...initialProgress,
-      quality: 'high',
+      quality: 'auto',
       reducedMotion: null,
       textOnly: false,
       selection: {},
@@ -216,13 +216,13 @@ export const useStore = create<State>()(
     }),
     {
       name: 'jnj-medtech-onboarding',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() => safeStorage),
-      // v1 defaulted to 'auto', which could render blurry; move those users to the sharp default.
+      // Older versions had 'high' as the default; Auto (with a performance check) is the default now.
       migrate: (persisted, version) => {
-        const state = persisted as { quality?: Quality }
-        if (version < 2 && state.quality === 'auto') state.quality = 'high'
-        return state as State
+        const state = persisted as { quality?: string }
+        if (version < 3 && state.quality !== 'ultra') state.quality = 'auto'
+        return state as unknown as State
       },
       partialize: (s) => ({
         current: s.current,

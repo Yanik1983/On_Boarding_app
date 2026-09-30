@@ -56,7 +56,7 @@ function CampusBuilding({ b }: { b: Building }) {
   return (
     <group position={[b.x, BASE_Y, b.z]}>
       <RoundedBox args={[b.width, b.height, b.depth]} radius={0.04} position={[0, b.height / 2, 0]} castShadow receiveShadow>
-        <meshPhysicalMaterial color={b.color} roughness={0.5} clearcoat={0.2} />
+        <meshStandardMaterial color={b.color} roughness={0.5} />
       </RoundedBox>
       {Array.from({ length: floors }, (_, f) => {
         const y = ((f + 0.55) / floors) * b.height

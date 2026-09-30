@@ -79,7 +79,10 @@ export function OrganizationStation({ station }: { station: StationOf<'organizat
     support.forEach((f, i) => positions.set(f.id, supportPosition(i, support.length)))
     const patient = corePosition(count - 1, count)
     const flowPoints = [...flow.map((f) => positions.get(f.id)!), patient].map((p) => new Vector3(p[0], p[1] + 0.05, p[2]))
-    return { core, support, positions, patient, curve: new CatmullRomCurve3(flowPoints), flowPoints }
+    const curve = new CatmullRomCurve3(flowPoints)
+    // Line points are created once: new arrays on every render would rebuild the line geometry.
+    const supportLines = support.map((f) => ({ id: f.id, points: [positions.get(f.id)!, CENTER] as Vec3[] }))
+    return { core, support, positions, patient, curve, flowPoints, flowLine: curve.getPoints(120), supportLines }
   }, [station])
 
   useFrame((state) => {
@@ -91,9 +94,9 @@ export function OrganizationStation({ station }: { station: StationOf<'organizat
 
   return (
     <group>
-      <Line points={layout.curve.getPoints(120)} color={station.color} lineWidth={3} />
-      {layout.support.map((f) => (
-        <Line key={f.id} points={[layout.positions.get(f.id)!, CENTER]} color={supportColor} lineWidth={1.2} transparent opacity={0.5} />
+      <Line points={layout.flowLine} color={station.color} lineWidth={3} />
+      {layout.supportLines.map((l) => (
+        <Line key={l.id} points={l.points} color={supportColor} lineWidth={1.2} transparent opacity={0.5} />
       ))}
       <mesh position={CENTER} castShadow>
         <sphereGeometry args={[0.55, 48, 48]} />

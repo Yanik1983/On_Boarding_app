@@ -1,10 +1,27 @@
 import { Environment, Grid, Lightformer } from '@react-three/drei'
-import { useLayoutEffect, useRef } from 'react'
+import { memo, useLayoutEffect, useRef } from 'react'
 import type { DirectionalLight, Object3D } from 'three'
 import { useStore } from '../state/store'
 import { stationPosition } from './layout'
 
 export const BACKGROUND = '#eef1f5'
+
+/**
+ * Studio lighting, generated in code (no downloads). Memoised on purpose: it must never re-render,
+ * because every re-render recomputes the whole environment map – a heavy job that caused a stutter at
+ * each station change.
+ */
+const StudioEnvironment = memo(function StudioEnvironment() {
+  return (
+    <Environment resolution={512} frames={1}>
+        <Lightformer form="rect" intensity={2.5} position={[0, 6, -8]} scale={[14, 5, 1]} />
+        <Lightformer form="rect" intensity={1.6} position={[-8, 3, 2]} rotation-y={Math.PI / 2} scale={[10, 4, 1]} />
+        <Lightformer form="rect" intensity={1.6} position={[8, 3, 2]} rotation-y={-Math.PI / 2} scale={[10, 4, 1]} />
+        <Lightformer form="circle" intensity={3} position={[0, 9, 0]} rotation-x={Math.PI / 2} scale={6} />
+        <Lightformer form="rect" intensity={0.8} color="#ffd9d2" position={[0, 2, 9]} rotation-y={Math.PI} scale={[12, 3, 1]} />
+      </Environment>
+  )
+})
 
 /** Studio lighting (generated in code – no downloads), ground, grid and a shadow light that follows the camera. */
 export function World({ shadows, shadowMapSize }: { shadows: boolean; shadowMapSize: number }) {
@@ -35,13 +52,7 @@ export function World({ shadows, shadowMapSize }: { shadows: boolean; shadowMapS
       >
         <orthographicCamera attach="shadow-camera" args={[-11, 11, 11, -11, 1, 60]} />
       </directionalLight>
-      <Environment resolution={512} frames={1}>
-        <Lightformer form="rect" intensity={2.5} position={[0, 6, -8]} scale={[14, 5, 1]} />
-        <Lightformer form="rect" intensity={1.6} position={[-8, 3, 2]} rotation-y={Math.PI / 2} scale={[10, 4, 1]} />
-        <Lightformer form="rect" intensity={1.6} position={[8, 3, 2]} rotation-y={-Math.PI / 2} scale={[10, 4, 1]} />
-        <Lightformer form="circle" intensity={3} position={[0, 9, 0]} rotation-x={Math.PI / 2} scale={6} />
-        <Lightformer form="rect" intensity={0.8} color="#ffd9d2" position={[0, 2, 9]} rotation-y={Math.PI} scale={[12, 3, 1]} />
-      </Environment>
+      <StudioEnvironment />
       <mesh rotation-x={-Math.PI / 2} position-y={-0.4} receiveShadow>
         <planeGeometry args={[900, 900]} />
         <meshStandardMaterial color="#e8ecf1" roughness={0.95} />

@@ -2,14 +2,37 @@ import { useState } from 'react'
 import { useContent } from '../content/context'
 import { isDraft } from '../content/load'
 import { hasWebGL } from '../lib/webgl'
+import { usePerf } from '../state/perf'
 import { useStore, type Quality } from '../state/store'
 import { Dialog } from './Dialog'
 
 const qualities: { value: Quality; label: string; text: string }[] = [
-  { value: 'high', label: 'High', text: "Sharpest picture at your screen's full resolution (recommended)." },
-  { value: 'auto', label: 'Auto', text: 'Lowers the resolution only if your computer struggles to keep motion smooth.' },
-  { value: 'ultra', label: 'Ultra 4K', text: 'Renders at least 3840 px wide. Best on powerful computers and 4K screens.' },
+  { value: 'auto', label: 'Auto', text: 'Checks your computer at the start and picks Balanced or Smooth (recommended).' },
+  { value: 'smooth', label: 'Smooth', text: 'Lightest graphics – for older laptops and remote desktops.' },
+  { value: 'balanced', label: 'Balanced', text: 'Sharp picture with depth shading and glow.' },
+  { value: 'ultra', label: 'Ultra 4K', text: 'Maximum detail, at least 3840 px wide – for powerful computers.' },
 ]
+
+const tierNames = { smooth: 'Smooth', balanced: 'Balanced', ultra: 'Ultra 4K' } as const
+
+/** Live readout: which graphics level is in use, the frame rate and the graphics chip. */
+function PerformanceInfo() {
+  const { tier, fps, renderer, software } = usePerf()
+  if (!tier) return null
+  return (
+    <p className="perf-info">
+      {`Now using: ${tierNames[tier]}`}
+      {fps !== null && ` · ${fps} frames per second`}
+      {renderer && ` · ${renderer}`}
+      {software && (
+        <>
+          <br />
+          <strong>Graphics acceleration is off in this browser</strong>, so 3D is drawn in software. See the note on screen for how to turn it on.
+        </>
+      )}
+    </p>
+  )
+}
 
 export function Settings() {
   const content = useContent()
@@ -26,6 +49,7 @@ export function Settings() {
 
       <fieldset className="field" disabled={state.textOnly || !hasWebGL()}>
         <legend>3D quality</legend>
+        <PerformanceInfo />
         {qualities.map((q) => (
           <label key={q.value} className="choice">
             <input type="radio" name="quality" checked={state.quality === q.value} onChange={() => state.setQuality(q.value)} />
