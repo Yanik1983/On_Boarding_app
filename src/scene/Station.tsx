@@ -68,7 +68,7 @@ export function Station({ info, number, title, color, children }: Props) {
             {title}
           </Label>
         </group>
-        {info.visible && children}
+        {children}
       </group>
     </StationContext.Provider>
   )

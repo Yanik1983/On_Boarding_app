@@ -140,7 +140,7 @@ export function CredoStation({ station }: { station: StationOf<'credo'> }) {
         <meshStandardMaterial color="#ffffff" roughness={0.3} />
       </mesh>
       <RoundedBox args={[3.4, 5.4, 0.5]} radius={0.14} position={[0, 2.95, 0]} castShadow>
-        <meshPhysicalMaterial color="#f4f7fb" transmission={0.9} thickness={1.4} roughness={0.32} ior={1.45} clearcoat={0.6} />
+        <meshPhysicalMaterial color="#eef3f9" transparent opacity={0.62} roughness={0.22} clearcoat={1} clearcoatRoughness={0.1} depthWrite={false} />
       </RoundedBox>
       {/* Chrome frame */}
       {[

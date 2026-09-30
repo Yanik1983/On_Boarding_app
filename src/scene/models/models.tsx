@@ -46,18 +46,23 @@ function Tube({ points, radius, color, segments = 64 }: { points: Vec3[]; radius
 /* -------------------------------------------------------------------- Heart */
 
 /** A plump, rounded heart body, about 1.4 units tall and 0.86 deep, centred on the origin. */
+let sharedHeart: ExtrudeGeometry | null = null
+
 export function heartGeometry() {
   // A deep bevel on a thin extrusion gives rounded, pillow-like sides that look good from every angle.
-  const g = new ExtrudeGeometry(heartShape(), {
-    depth: 0.24,
-    bevelEnabled: true,
-    bevelThickness: 0.31,
-    bevelSize: 0.17,
-    bevelSegments: 20,
-    curveSegments: 96,
-  })
-  g.center()
-  return g
+  // Built once and shared by every heart in the app.
+  if (!sharedHeart) {
+    sharedHeart = new ExtrudeGeometry(heartShape(), {
+      depth: 0.24,
+      bevelEnabled: true,
+      bevelThickness: 0.31,
+      bevelSize: 0.17,
+      bevelSegments: 14,
+      curveSegments: 72,
+    })
+    sharedHeart.center()
+  }
+  return sharedHeart
 }
 
 /** Great vessels on top and coronary arteries on the front surface – makes the heart read as an organ. */
@@ -113,7 +118,7 @@ export function LensModel({ color = '#9fd9e6', power = 1.2, radius = 0.7 }: { co
   return (
     <group rotation-y={Math.PI / 2}>
       <mesh geometry={geometry} castShadow>
-        <meshPhysicalMaterial color={color} transmission={0.85} thickness={0.6} roughness={0.05} ior={1.45} clearcoat={1} />
+        <meshPhysicalMaterial color={color} transparent opacity={0.6} roughness={0.05} clearcoat={1} depthWrite={false} />
       </mesh>
       {/* Lens holder ring with two mounting tabs */}
       <mesh rotation-y={Math.PI / 2}>
@@ -368,7 +373,7 @@ function IvlCatheter() {
       </mesh>
       <mesh rotation-z={Math.PI / 2}>
         <capsuleGeometry args={[0.13, 0.5, 16, 48]} />
-        <meshPhysicalMaterial color="#cfe8ff" transmission={0.75} roughness={0.08} thickness={0.2} transparent opacity={0.85} clearcoat={1} />
+        <meshPhysicalMaterial color="#cfe8ff" transparent opacity={0.55} roughness={0.08} clearcoat={1} depthWrite={false} />
       </mesh>
       {[-0.3, 0.3].map((x) => (
         <mesh key={x} position={[x, 0, 0]} rotation-y={Math.PI / 2}>
@@ -612,11 +617,10 @@ function ContactLens() {
         <sphereGeometry args={[0.75, 96, 48, 0, Math.PI * 2, 0, 0.62]} />
         <meshPhysicalMaterial
           color="#8fd3ff"
-          transmission={0.65}
           roughness={0.04}
-          thickness={0.1}
           transparent
-          opacity={0.82}
+          opacity={0.6}
+          depthWrite={false}
           side={DoubleSide}
           clearcoat={1}
           iridescence={0.4}
@@ -639,7 +643,7 @@ function Iol() {
   return (
     <group rotation-x={-1.1}>
       <mesh geometry={optic} rotation-y={Math.PI / 2} castShadow>
-        <meshPhysicalMaterial color="#f2fbff" transmission={0.85} roughness={0.03} thickness={0.2} clearcoat={1} iridescence={0.3} />
+        <meshPhysicalMaterial color="#f2fbff" transparent opacity={0.75} roughness={0.03} clearcoat={1} iridescence={0.3} />
       </mesh>
       <mesh>
         <torusGeometry args={[0.305, 0.01, 12, 64]} />

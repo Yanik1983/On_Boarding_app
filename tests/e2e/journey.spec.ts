@@ -54,7 +54,12 @@ test('a new employee can complete the whole journey offline', async ({ page }) =
   const nameField = page.getByLabel(/Your name/)
   await nextUntil(page, () => nameField.isVisible())
   await nameField.fill('Alex Tester')
+  // No second, disabled "start" button next to "Start my journey".
+  await expect(page.locator('.panel-footer .button.primary')).toHaveCount(0)
+  // The name shows up right away in the top bar.
+  await expect(page.locator('.name-chip')).toContainText('Alex')
   await page.getByRole('button', { name: /Start my journey/ }).click()
+  await expect(page.getByRole('status').filter({ hasText: 'Welcome aboard, Alex' })).toBeVisible()
 
   // Back on the first page of a station returns to the previous station's last page.
   await expect(page.locator('#panel-title')).toHaveText(stations[1].title)

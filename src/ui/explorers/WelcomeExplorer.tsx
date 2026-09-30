@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import type { StationOf } from '../../content/schema'
+import { firstName } from '../../lib/personalize'
 import { useStore } from '../../state/store'
 import { ChevronRight } from '../icons'
 
 export function WelcomeExplorer({ station }: { station: StationOf<'welcome'> }) {
-  const storedName = useStore((s) => s.name)
-  const [name, setName] = useState(storedName)
+  const name = useStore((s) => s.name)
+  const setName = useStore((s) => s.setName)
 
   return (
     <>
@@ -16,6 +16,7 @@ export function WelcomeExplorer({ station }: { station: StationOf<'welcome'> }) 
           const store = useStore.getState()
           store.setName(name.trim())
           store.completeStation(station.id)
+          store.showToast(`Welcome aboard, ${firstName(name)}! Your journey starts now.`)
           store.next()
         }}
       >

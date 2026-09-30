@@ -61,6 +61,15 @@ input {
   touch-action: none;
 }
 
+.scene canvas {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.scene canvas.ready {
+  opacity: 1;
+}
+
 .scene-loading {
   position: absolute;
   inset: 0;
@@ -105,7 +114,7 @@ input {
   border-radius: 999px;
   background: var(--surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
+  /* no backdrop blur: it would be recomputed every frame over the animated 3D view */
 }
 
 .brand-mark {
@@ -156,7 +165,7 @@ input {
   box-shadow: var(--shadow);
   font-size: 1.15rem;
   cursor: pointer;
-  backdrop-filter: blur(12px);
+  /* no backdrop blur: it would be recomputed every frame over the animated 3D view */
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
@@ -197,7 +206,7 @@ input {
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(18px) saturate(1.2);
+  /* no backdrop blur: it would be recomputed every frame over the animated 3D view */
   overflow: hidden;
   border-top: 0.3rem solid var(--accent);
   animation: panel-in 0.45s ease backwards;
@@ -252,28 +261,219 @@ input {
   color: var(--muted);
 }
 
-.step-dots {
+.step-row {
   display: flex;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 0.75rem;
   margin-top: 0.9rem;
 }
 
+.step-dots {
+  flex: 1;
+  display: flex;
+  gap: 0.35rem;
+}
+
+/* Each page segment fills from the left when reached – a small progress animation on every Next. */
 .step-dot {
+  position: relative;
   flex: 1;
   height: 0.3rem;
   padding: 0;
   border: 0;
   border-radius: 999px;
   background: var(--line);
+  overflow: hidden;
   cursor: pointer;
+  transition: height 0.25s ease;
 }
 
-.step-dot.seen {
-  background: color-mix(in srgb, var(--accent) 35%, var(--line));
+.step-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.22, 0.8, 0.24, 1), opacity 0.3s ease;
+}
+
+.step-dot.seen::after {
+  transform: scaleX(1);
+  opacity: 0.4;
+}
+
+.step-dot.active::after {
+  transform: scaleX(1);
 }
 
 .step-dot.active {
+  height: 0.38rem;
+}
+
+.step-count {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Page transitions: the page slides in from the direction of travel, its parts rise in one after another. */
+.step-content.forward {
+  animation: page-forward 0.5s cubic-bezier(0.22, 0.8, 0.24, 1) backwards;
+}
+
+.step-content.back {
+  animation: page-back 0.5s cubic-bezier(0.22, 0.8, 0.24, 1) backwards;
+}
+
+.step-content > * {
+  animation: page-rise 0.6s cubic-bezier(0.22, 0.8, 0.24, 1) backwards;
+}
+
+.step-content > :nth-child(2) {
+  animation-delay: 0.07s;
+}
+
+.step-content > :nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+.step-content > :nth-child(4) {
+  animation-delay: 0.21s;
+}
+
+.step-content > :nth-child(n + 5) {
+  animation-delay: 0.28s;
+}
+
+@keyframes page-forward {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem);
+  }
+}
+
+@keyframes page-back {
+  from {
+    opacity: 0;
+    transform: translateX(-2.5rem);
+  }
+}
+
+@keyframes page-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem);
+  }
+}
+
+/* Accent bar under each page title, drawn in as the page appears. */
+.step-title::after {
+  content: '';
+  display: block;
+  width: 2.4rem;
+  height: 0.2rem;
+  margin-top: 0.45rem;
+  border-radius: 999px;
   background: var(--accent);
+  animation: bar-draw 0.7s 0.15s cubic-bezier(0.22, 0.8, 0.24, 1) backwards;
+  transform-origin: left;
+}
+
+@keyframes bar-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.button svg {
+  transition: transform 0.2s ease;
+}
+
+.button.primary:hover:not(:disabled) svg {
+  transform: translateX(3px);
+}
+
+.button.secondary:hover:not(:disabled) svg {
+  transform: translateX(-3px);
+}
+
+/* Name chip in the top bar */
+.name-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.85rem 0.25rem 0.3rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  animation: chip-in 0.5s cubic-bezier(0.22, 0.8, 0.24, 1) backwards;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), #ff6a3d);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* Toast (e.g. the personal welcome after entering a name) */
+.toast-region {
+  position: absolute;
+  top: 5.2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.toast {
+  margin: 0;
+  padding: 0.8rem 1.3rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  animation: toast-life 4s ease forwards;
+}
+
+@keyframes toast-life {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.8rem) scale(0.96);
+  }
+  8%,
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
 }
 
 .panel-body {
@@ -860,7 +1060,7 @@ input {
   border-radius: 999px;
   background: var(--surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
+  /* no backdrop blur: it would be recomputed every frame over the animated 3D view */
   max-width: calc(100vw - 1rem);
 }
 
@@ -980,7 +1180,7 @@ input {
   place-items: center;
   padding: 1rem;
   background: rgba(22, 25, 29, 0.35);
-  backdrop-filter: blur(3px);
+  /* no backdrop blur: it would be recomputed every frame over the animated 3D view */
   z-index: 10;
 }
 
@@ -1240,8 +1440,23 @@ input {
   }
 
   .brand span,
-  .draft-badge {
+  .draft-badge,
+  .name-chip-text {
     display: none;
+  }
+
+  .name-chip {
+    padding: 0.2rem;
+  }
+
+  .toast-region {
+    top: 3.8rem;
+    padding: 0 0.75rem;
+  }
+
+  .toast {
+    border-radius: 1rem;
+    text-align: center;
   }
 
   .icon-button {

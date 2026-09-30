@@ -29,7 +29,7 @@ function OpticsBench() {
     <group position={[-0.6, BENCH_Y, 0]}>
       {Math.abs(power) > 0.01 && (
         <mesh geometry={corrector} position={[OPTICS.correctorX, 0, 0]}>
-          <meshPhysicalMaterial color="#bfe6f2" transmission={0.7} roughness={0.05} thickness={0.4} transparent opacity={0.8} />
+          <meshPhysicalMaterial color="#bfe6f2" transparent opacity={0.6} roughness={0.05} clearcoat={1} />
         </mesh>
       )}
       <mesh position={[eyeCentre, 0, 0]}>
@@ -46,7 +46,7 @@ function OpticsBench() {
         />
       </mesh>
       <mesh geometry={crystalline} position={[OPTICS.eyeLensX, 0, 0]}>
-        <meshPhysicalMaterial color="#f6e7b0" transmission={0.5} roughness={0.1} thickness={0.3} />
+        <meshPhysicalMaterial color="#f6e7b0" transparent opacity={0.8} roughness={0.1} clearcoat={1} />
       </mesh>
       {optics.rays.map((ray, i) => (
         <Line key={i} points={ray.points.map(([x, y]) => [x, y, 0] as [number, number, number])} color="#ffb000" lineWidth={2.6} />
@@ -176,13 +176,17 @@ function HeartBench() {
     material.uniforms.uMode.value = rhythm === 'normal' ? 0 : rhythm === 'afib' ? 1 : 2
     const line = trace.current
     if (line) {
+      // Update the existing line buffer in place (no new buffers or garbage every frame).
       const effective: Rhythm = rhythm === 'afib' ? 'afib' : 'normal'
-      const positions: number[] = []
-      for (let i = 0; i < 160; i++) {
-        const x = -2.4 + (i / 159) * 4.8
-        positions.push(x, ecg(time * 0.9 + i / 70, effective) * 0.55, 0)
+      const buffer = line.geometry.attributes.instanceStart as unknown as { data: { array: Float32Array; needsUpdate: boolean } }
+      const array = buffer.data.array
+      for (let i = 0; i < 159; i++) {
+        const y0 = ecg(time * 0.9 + i / 70, effective) * 0.55
+        const y1 = ecg(time * 0.9 + (i + 1) / 70, effective) * 0.55
+        array[i * 6 + 1] = y0
+        array[i * 6 + 4] = y1
       }
-      line.geometry.setPositions(positions)
+      buffer.data.needsUpdate = true
     }
     if (tip.current) {
       const pulse = rhythm === 'ablated' ? 0.5 + Math.sin(time * 6) * 0.5 : 0
@@ -209,7 +213,7 @@ function HeartBench() {
         </RoundedBox>
         <Line ref={trace} points={tracePoints} color="#5cff9d" lineWidth={2.2} />
       </group>
-      <BillboardLabel position={[0, 2.05, 0]} fontSize={0.24} color="#1b1f24">
+      <BillboardLabel position={[0, 2.85, 0]} fontSize={0.24} color="#1b1f24">
         {rhythm === 'normal' ? 'Normal sinus rhythm' : rhythm === 'afib' ? 'Atrial fibrillation – chaotic signals' : 'After ablation – lesions block faulty signals'}
       </BillboardLabel>
     </group>

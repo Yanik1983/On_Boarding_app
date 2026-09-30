@@ -59,6 +59,7 @@ interface State {
   settingsOpen: boolean
   sheetCollapsed: boolean
   viewInset: ViewInset
+  toast: string | null
   lab: LabState
 
   init: (stationIds: string[], options: { allowFreeOrder: boolean; preview?: boolean }) => void
@@ -78,6 +79,7 @@ interface State {
   setMenuOpen: (open: boolean) => void
   setSettingsOpen: (open: boolean) => void
   setSheetCollapsed: (collapsed: boolean) => void
+  showToast: (message: string | null) => void
   setViewInset: (inset: ViewInset) => void
   setLab: (patch: Partial<LabState>) => void
   resetProgress: () => void
@@ -150,6 +152,7 @@ export const useStore = create<State>()(
       settingsOpen: false,
       sheetCollapsed: false,
       viewInset: { top: 0, bottom: 0 },
+      toast: null,
       lab: initialLab,
 
       init: (stationIds, { allowFreeOrder, preview = false }) => {
@@ -194,6 +197,7 @@ export const useStore = create<State>()(
       setMenuOpen: (menuOpen) => set({ menuOpen, settingsOpen: false }),
       setSettingsOpen: (settingsOpen) => set({ settingsOpen, menuOpen: false }),
       setSheetCollapsed: (sheetCollapsed) => set({ sheetCollapsed }),
+      showToast: (toast) => set({ toast }),
       setViewInset: (viewInset) => {
         const { top, bottom } = get().viewInset
         if (Math.abs(top - viewInset.top) > 0.5 || Math.abs(bottom - viewInset.bottom) > 0.5) set({ viewInset })

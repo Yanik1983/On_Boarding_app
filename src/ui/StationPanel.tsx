@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, type CSSProperties, type RefObject } from 'react'
 import { useContent } from '../content/context'
 import type { Station } from '../content/schema'
+import { personalize } from '../lib/personalize'
 import { SHEET_QUERY } from '../lib/responsive'
 import { getSteps } from '../lib/steps'
 import { canVisit, useStore } from '../state/store'
@@ -9,17 +10,11 @@ import { Explorer } from './explorers/Explorer'
 import { goToPreviousStation } from './navigation'
 import { CheckIcon, ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from './icons'
 
-function Paragraphs({ text }: { text: string }) {
-  return (
-    <>
-      {text
-        .split(/\n\s*\n/)
-        .filter((p) => p.trim())
-        .map((p, i) => (
-          <p key={i}>{p.trim()}</p>
-        ))}
-    </>
-  )
+function paragraphs(text: string) {
+  return text
+    .split(/\n\s*\n/)
+    .filter((p) => p.trim())
+    .map((p, i) => <p key={i}>{p.trim()}</p>)
 }
 
 /** Tells the 3D view how much of the screen the panel covers when it is a bottom sheet (phones). */
@@ -59,7 +54,15 @@ export function StationPanel({ station, index, collapsible }: { station: Station
   const sheetCollapsed = useStore((s) => s.sheetCollapsed)
   const collapsed = collapsible && sheetCollapsed
   const current = steps[step]
+  const name = useStore((s) => s.name)
+  const text = (value: string) => personalize(value, name)
   useReportInset(panel)
+  // Direction of the last page change, for the slide animation.
+  const previousStep = useRef(step)
+  const direction = step >= previousStep.current ? 'forward' : 'back'
+  useEffect(() => {
+    previousStep.current = step
+  }, [step])
   const setStep = (value: number) => useStore.getState().setStep(station.id, value)
 
   useEffect(() => {
@@ -72,8 +75,6 @@ export function StationPanel({ station, index, collapsible }: { station: Station
   useEffect(() => {
     if (completesOnLastPage && step === steps.length - 1 && !completed) useStore.getState().completeStation(station.id)
   }, [completesOnLastPage, step, steps.length, completed, station.id])
-
-  const hint = station.kind === 'welcome' ? 'Enter your name to start' : steps.some((s) => s.type === 'checkpoint') ? 'Answer the quick check to continue' : 'Go through all pages to continue'
 
   return (
     <aside
@@ -113,6 +114,7 @@ export function StationPanel({ station, index, collapsible }: { station: Station
         </p>
         <h1 id="panel-title">{station.title}</h1>
         {station.subtitle && <p className="subtitle">{station.subtitle}</p>}
+        <div className="step-row">
         <nav className="step-dots" aria-label="Pages in this station">
           {steps.map((s, i) => (
             <button
@@ -124,24 +126,24 @@ export function StationPanel({ station, index, collapsible }: { station: Station
             />
           ))}
         </nav>
+          <span className="step-count" aria-hidden>{`${step + 1} / ${steps.length}`}</span>
+        </div>
       </header>
 
       <div className="panel-body" id="panel-body" ref={body} data-step-type={current.type} hidden={collapsed}>
-        <h2 className="step-title">{current.title}</h2>
-        {current.type === 'card' && (
-          <>
-            <Paragraphs text={station.cards[current.index].body} />
-            {station.cards[current.index].bullets && (
-              <ul className="bullets">
-                {station.cards[current.index].bullets!.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
-            )}
-          </>
-        )}
-        {current.type === 'explore' && <Explorer station={station} />}
-        {current.type === 'checkpoint' && station.checkpoint && <Checkpoint station={station} question={station.checkpoint} />}
+        <div key={step} className={`step-content ${direction}`}>
+          <h2 className="step-title">{text(current.title)}</h2>
+          {current.type === 'card' && paragraphs(text(station.cards[current.index].body))}
+          {current.type === 'card' && station.cards[current.index].bullets && (
+            <ul className="bullets">
+              {station.cards[current.index].bullets!.map((b, i) => (
+                <li key={i}>{text(b)}</li>
+              ))}
+            </ul>
+          )}
+          {current.type === 'explore' && <Explorer station={station} />}
+          {current.type === 'checkpoint' && station.checkpoint && <Checkpoint station={station} question={station.checkpoint} />}
+        </div>
         {step === steps.length - 1 && station.sources.length > 0 && (
           <details className="sources">
             <summary>{`Sources (${station.sources.length})`}</summary>
@@ -176,15 +178,9 @@ export function StationPanel({ station, index, collapsible }: { station: Station
           <button className="button primary" onClick={() => setStep(step + 1)}>
             Next <ChevronRight />
           </button>
-        ) : nextStation ? (
-          <button className="button primary" onClick={() => useStore.getState().goTo(index + 1)} disabled={!canGoNext}>
-            {canGoNext ? (
-              <>
-                {`Continue to ${nextStation.title}`} <ChevronRight />
-              </>
-            ) : (
-              hint
-            )}
+        ) : nextStation && canGoNext ? (
+          <button className="button primary" onClick={() => useStore.getState().goTo(index + 1)}>
+            {`Continue to ${nextStation.title}`} <ChevronRight />
           </button>
         ) : null}
       </footer>

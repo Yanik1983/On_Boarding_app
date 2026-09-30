@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useContent } from '../content/context'
 import { isDraft } from '../content/load'
+import { firstName, initials } from '../lib/personalize'
 import { getSteps } from '../lib/steps'
 import { canVisit, useStore } from '../state/store'
 import { PrintCertificate } from './Certificate'
@@ -48,6 +49,37 @@ function useKeyboard() {
   }, [content])
 }
 
+function Toast() {
+  const toast = useStore((s) => s.toast)
+  useEffect(() => {
+    if (!toast) return
+    const timer = window.setTimeout(() => useStore.getState().showToast(null), 4000)
+    return () => window.clearTimeout(timer)
+  }, [toast])
+  return (
+    <div className="toast-region" role="status" aria-live="polite">
+      {toast && (
+        <p className="toast" key={toast}>
+          {toast}
+        </p>
+      )}
+    </div>
+  )
+}
+
+function NameChip() {
+  const name = useStore((s) => s.name)
+  if (!name.trim()) return null
+  return (
+    <button className="name-chip" onClick={() => useStore.getState().setSettingsOpen(true)} aria-label={`${name} – open settings`} title="Your profile">
+      <span className="avatar" aria-hidden>
+        {initials(name)}
+      </span>
+      <span className="name-chip-text">{firstName(name)}</span>
+    </button>
+  )
+}
+
 export function Overlay({ notice, show3d }: { notice: keyof typeof notices | null; show3d: boolean }) {
   const content = useContent()
   const current = useStore((s) => s.current)
@@ -67,6 +99,7 @@ export function Overlay({ notice, show3d }: { notice: keyof typeof notices | nul
           </div>
         </div>
         <div className="top-actions">
+          <NameChip />
           {isDraft(content) && (
             <span className="draft-badge" title="Some content has not been approved yet">
               DRAFT – content under review
@@ -92,6 +125,7 @@ export function Overlay({ notice, show3d }: { notice: keyof typeof notices | nul
       <p className="sr-only" aria-live="polite">
         {`Station ${current + 1} of ${content.stations.length}: ${station.title}`}
       </p>
+      <Toast />
       <PrintCertificate />
     </>
   )

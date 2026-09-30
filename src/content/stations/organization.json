@@ -19,7 +19,7 @@
       "body": "Every product travels the same journey. Watch the glowing token in the 3D scene: it moves from research and development, through quality, clinical and regulatory work, into manufacturing and supply, and finally to the teams who support clinicians and patients.\n\nSupport functions – such as Finance, HR, Technology, Legal & Compliance and EHS – make that journey possible."
     },
     {
-      "title": "Where do you fit?",
+      "title": "Where do you fit, {name}?",
       "body": "Your manager will show you your team's place on this map. The local organisation chart of our site is in the Our Site station – ask your onboarding buddy to walk you through it."
     }
   ],

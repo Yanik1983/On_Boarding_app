@@ -29,8 +29,9 @@ The new employee travels along a path through nine stations. Each station has sh
 
 Other features:
 
+- **Personal**: the employee's name appears in the top bar, in the 3D welcome and in some card titles, and on the certificate.
 - **Progress is saved** in the browser on that computer, so employees can pause and resume. Nothing is sent anywhere.
-- **Quality settings** (gear icon): *High* (default) draws every pixel of the screen, up to 3× on phones, and supersamples standard 1080p screens at 1.5× for extra-crisp edges. *Auto* lowers the resolution on slow computers. *Ultra 4K* renders at least 3840 pixels wide.
+- **Quality settings** (gear icon): *High* (default) renders at the screen's full resolution (up to 3× on phones) and keeps motion smooth automatically: if a computer struggles it first switches off the most expensive effects, and only lowers resolution as a last resort; with spare power it adds extra sharpness. *Auto* may go lower still on very slow computers. *Ultra 4K* renders at least 3840 pixels wide with every effect.
 - **Rendering detail**: ambient occlusion (soft contact shading), high-resolution shadows and reflections, polished and brushed-metal materials, and sharp 3D labels with an outline for legibility.
 - **Phones and tablets**: the text becomes a bottom sheet and the 3D scene moves into the space above it. **Hide text** shrinks the panel to its title and buttons so the 3D fills the screen (this also works on desktop).
 
@@ -49,6 +50,7 @@ All texts live in a readable block at the top of the HTML file.
 2. Open the copy in **Notepad** and search for `EDITABLE CONTENT`.
 3. Change only the text between double quotes. Keep quotes, commas and brackets as they are.
    - For a double quote inside a text, write `\"` (or use “ ”); for a line break, write `\n`.
+   - Write `{name}` anywhere in a card to insert the employee's first name.
 4. Save the file and open it in the browser. If something is broken, the app lists exactly which field to fix.
 
 Things you will want to fill in:
@@ -62,7 +64,7 @@ For larger changes, developers can edit the source files in `src/content/` and r
 
 ## Useful links
 
-Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.3.1.html?preview`:
+Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.4.0.html?preview`:
 
 | Option | Effect |
 |--------|--------|

@@ -1,6 +1,6 @@
-import { PerformanceMonitor, Stats } from '@react-three/drei'
-import { Canvas } from '@react-three/fiber'
-import { Suspense, useEffect, useState, type ReactNode } from 'react'
+import { PerformanceMonitor, Preload, Stats } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useContent } from '../content/context'
 import type { Station as StationData } from '../content/schema'
 import { urlOptions } from '../lib/params'
@@ -56,20 +56,37 @@ function useViewportWidth() {
 }
 
 /**
- * Resolution strategy (pixels rendered per CSS pixel):
- * - high:  the screen's full native resolution – every physical pixel is drawn (default). Standard
- *          (1x) monitors are supersampled at 1.5x for crisper edges and text; if the frame rate stays
- *          low, only that extra is dropped – High never renders below native resolution.
- * - auto:  starts at native resolution and steps down if the frame rate stays very low
- * - ultra: at least 3840 pixels wide (true 4K; supersampled on smaller screens)
- * Phones have very dense screens (often 3x), so they are allowed up to 3x.
+ * Adaptive quality ladder – keeps motion smooth by trading effects first and resolution last:
+ *  -1  extra sharpness: standard (1x) desktop screens supersampled at 1.25x – only with frame-rate headroom
+ *   0  full quality: native resolution, ambient occlusion, bloom, 4x anti-aliasing (start)
+ *   1  ambient occlusion off
+ *   2  bloom and vignette off, lighter anti-aliasing
+ *   3  resolution 85%
+ *   4  resolution 70% (Auto only)
+ * Ultra is fixed: at least 3840 px wide with every effect.
  */
-function resolution(quality: Quality, factor: number, viewportWidth: number) {
+export type QualityLevel = -1 | 0 | 1 | 2 | 3 | 4
+
+function resolution(quality: Quality, level: QualityLevel, viewportWidth: number) {
   const native = window.devicePixelRatio || 1
-  const full = Math.min(native, isHandheld() ? 3 : 2)
+  const handheld = isHandheld()
+  const full = Math.min(native, handheld ? 3 : 2)
   if (quality === 'ultra') return Math.min(3, Math.max(native, 3840 / Math.max(1, viewportWidth)))
-  if (quality === 'high') return Math.max(full, Math.max(full, isHandheld() ? full : 1.5) * factor)
-  return Math.max(Math.min(native, 1), full * factor)
+  if (level < 0 && !handheld && native < 1.5) return 1.25
+  if (level >= 4) return Math.max(0.6, full * 0.7)
+  if (level >= 3) return Math.max(handheld ? 1.5 : 0.75, full * 0.85)
+  return full
+}
+
+/** Marks the canvas as ready after the first rendered frame, so it can fade in. */
+function ReadySignal() {
+  const done = useRef(false)
+  useFrame(({ gl }) => {
+    if (done.current) return
+    done.current = true
+    gl.domElement.classList.add('ready')
+  })
+  return null
 }
 
 /** Waits a few seconds (loading and shader compilation make the first frames slow) before judging performance. */
@@ -87,12 +104,13 @@ export function Scene() {
   const current = useStore((s) => s.current)
   const previous = useStore((s) => s.previous)
   const quality = useStore((s) => s.quality)
-  const [factor, setFactor] = useState(1)
+  const [level, setLevel] = useState<QualityLevel>(0)
   const viewportWidth = useViewportWidth()
-  const dpr = resolution(quality, factor, viewportWidth)
-  const lowPower = quality === 'auto' && factor <= 0.6
-  const monitor = useDelayedStart(4000) && quality !== 'ultra'
-  const shadowMapSize = quality !== 'auto' && !isHandheld() ? 4096 : 2048
+  const dpr = resolution(quality, level, viewportWidth)
+  const monitor = useDelayedStart(3000) && quality !== 'ultra'
+  const maxLevel = quality === 'auto' ? 4 : 3
+  const effectiveLevel: QualityLevel = quality === 'ultra' ? 0 : level
+  const shadowMapSize = quality === 'ultra' ? 4096 : 2048
   const initialView = stationView(current, window.innerWidth, window.innerHeight)
 
   return (
@@ -103,19 +121,23 @@ export function Scene() {
       flat
       gl={{ antialias: false, powerPreference: 'high-performance', stencil: false }}
       camera={{ fov: 40, near: 0.1, far: 400, position: initialView.position }}
+      onCreated={({ gl }) => {
+        // ?debug exposes the renderer so draw calls and triangle counts can be inspected.
+        if (urlOptions.debug) (window as unknown as { __renderer: unknown }).__renderer = gl
+      }}
       aria-hidden
     >
       {monitor && (
+        // Below 45 fps: step down one level. Above 57 fps (smooth on a 60 Hz screen): step back up.
         <PerformanceMonitor
-          bounds={() => [24, 45]}
-          flipflops={4}
-          onDecline={() => setFactor((f) => Math.max(0.6, f - 0.15))}
-          onIncline={() => setFactor((f) => Math.min(1, f + 0.1))}
-          onFallback={() => setFactor(0.7)}
+          bounds={() => [45, 57]}
+          flipflops={3}
+          onDecline={() => setLevel((l) => Math.min(maxLevel, l + 1) as QualityLevel)}
+          onIncline={() => setLevel((l) => Math.max(-1, l - 1) as QualityLevel)}
         />
       )}
       <Suspense fallback={null}>
-        <World shadows={!lowPower} shadowMapSize={shadowMapSize} />
+        <World shadows={effectiveLevel < 3} shadowMapSize={shadowMapSize} />
         <JourneyPath count={stations.length} color={stations[0]?.color ?? '#d51900'} />
         {stations.map((station, index) => (
           <Station
@@ -133,7 +155,10 @@ export function Scene() {
             {centerpiece(station)}
           </Station>
         ))}
-        <Effects full={!lowPower} handheld={isHandheld()} />
+        <Effects level={effectiveLevel} ultra={quality === 'ultra'} />
+        {/* Compile every station's shaders up front, so flying to a station never stalls. */}
+        <Preload all />
+        <ReadySignal />
       </Suspense>
       <CameraRig />
       {urlOptions.debug && <Stats />}

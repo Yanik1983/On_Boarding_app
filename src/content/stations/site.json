@@ -9,7 +9,7 @@
   "sources": [],
   "cards": [
     {
-      "title": "Welcome to [Site name]",
+      "title": "Welcome to [Site name], {name}",
       "body": "[Placeholder – replace with your site's story: when it opened, how many people work here, and what makes it special.]\n\nExplore the 3D campus map: click a pin to learn about each area."
     },
     {
