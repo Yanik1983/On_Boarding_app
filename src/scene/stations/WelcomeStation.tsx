@@ -5,24 +5,32 @@ import { CatmullRomCurve3, TubeGeometry, Vector3, type Group } from 'three'
 import type { StationOf } from '../../content/schema'
 import { useReducedMotion } from '../../lib/motion'
 import { useStore, type Vec3 } from '../../state/store'
-import { segment } from '../geometry'
+import { heartGeometry } from '../models/models'
 import { Label } from '../Label'
 import { useStationInfo } from '../StationContext'
 
 function helixPoint(t: number, phase: number): Vec3 {
   const angle = t * Math.PI * 4 + phase
-  const radius = 1.9 + Math.sin(t * Math.PI) * 0.5
+  const radius = 2.25 + Math.sin(t * Math.PI) * 0.45
   return [Math.cos(angle) * radius, 0.5 + t * 4.6, Math.sin(angle) * radius]
 }
 
-/** A double-helix light ribbon around a glass core – life science meets technology. */
+/** Heartbeat curve: two quick pulses ("lub-dub") about once per second, then rest. */
+function heartbeat(t: number) {
+  const x = t % 1.1
+  return Math.exp(-(((x - 0.1) / 0.06) ** 2)) + 0.6 * Math.exp(-(((x - 0.32) / 0.06) ** 2))
+}
+
+/** A double-helix ribbon around a glossy, turning heart – life science, technology and care. */
 export function WelcomeStation({ station }: { station: StationOf<'welcome'> }) {
   const { active } = useStationInfo()
   const reduced = useReducedMotion()
   const name = useStore((s) => s.name)
   const spin = useRef<Group>(null)
+  const heart = useRef<Group>(null)
+  const heartShape = useMemo(heartGeometry, [])
 
-  const { strandA, strandB, rungs } = useMemo(() => {
+  const { strandA, strandB, beads } = useMemo(() => {
     const strand = (phase: number) =>
       new TubeGeometry(
         new CatmullRomCurve3(Array.from({ length: 80 }, (_, i) => new Vector3(...helixPoint(i / 79, phase)))),
@@ -30,15 +38,18 @@ export function WelcomeStation({ station }: { station: StationOf<'welcome'> }) {
         0.11,
         16,
       )
-    const rungs = Array.from({ length: 16 }, (_, i) => {
-      const t = (i + 0.5) / 16
-      return segment(helixPoint(t, 0), helixPoint(t, Math.PI))
-    })
-    return { strandA: strand(0), strandB: strand(Math.PI), rungs }
+    // Small glowing beads along both strands (the heart in the middle stays unobstructed).
+    const beads = Array.from({ length: 24 }, (_, i) => helixPoint((i + 0.5) / 24, i % 2 ? Math.PI : 0))
+    return { strandA: strand(0), strandB: strand(Math.PI), beads }
   }, [])
 
-  useFrame((_, delta) => {
-    if (spin.current && active && !reduced) spin.current.rotation.y += delta * 0.18
+  useFrame((state, delta) => {
+    if (!active || reduced) return
+    if (spin.current) spin.current.rotation.y += delta * 0.18
+    if (heart.current) {
+      heart.current.rotation.y += delta * 0.7
+      heart.current.scale.setScalar(1.8 * (1 + 0.06 * heartbeat(state.clock.elapsedTime)))
+    }
   })
 
   return (
@@ -51,21 +62,28 @@ export function WelcomeStation({ station }: { station: StationOf<'welcome'> }) {
         <mesh geometry={strandB} castShadow>
           <meshStandardMaterial color="#d8dde4" metalness={1} roughness={0.22} />
         </mesh>
-        {rungs.map((r, i) => (
-          <mesh key={i} position={r.position} quaternion={r.quaternion}>
-            <cylinderGeometry args={[0.035, 0.035, r.length, 10]} />
-            <meshStandardMaterial color="#ffffff" emissive="#ffd9d2" emissiveIntensity={0.6} />
+        {beads.map((p, i) => (
+          <mesh key={i} position={p}>
+            <sphereGeometry args={[0.16, 24, 16]} />
+            <meshStandardMaterial color="#ffffff" emissive="#ffd9d2" emissiveIntensity={1.4} toneMapped={false} />
           </mesh>
         ))}
       </group>
-      <mesh position={[0, 2.8, 0]} castShadow>
-        <sphereGeometry args={[1.05, 64, 64]} />
-        <meshPhysicalMaterial color="#ffffff" transmission={1} thickness={1.2} roughness={0.08} ior={1.5} clearcoat={1} />
-      </mesh>
-      <mesh position={[0, 2.8, 0]}>
-        <sphereGeometry args={[0.32, 32, 32]} />
-        <meshStandardMaterial color={station.color} emissive={station.color} emissiveIntensity={3} toneMapped={false} />
-      </mesh>
+      <group ref={heart} position={[0, 2.8, 0]} scale={1.8}>
+        <mesh geometry={heartShape} castShadow>
+          <meshPhysicalMaterial
+            color={station.color}
+            emissive={station.color}
+            emissiveIntensity={0.12}
+            roughness={0.26}
+            clearcoat={1}
+            clearcoatRoughness={0.06}
+            sheen={0.25}
+            sheenColor="#ff5a45"
+          />
+        </mesh>
+      </group>
+      <pointLight position={[0, 2.8, 1.6]} color={station.color} intensity={4} distance={5} decay={2} />
       <mesh position={[0, 0.12, 0]} receiveShadow castShadow>
         <cylinderGeometry args={[2.9, 3.1, 0.24, 64]} />
         <meshStandardMaterial color="#ffffff" roughness={0.3} />

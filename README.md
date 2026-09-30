@@ -62,7 +62,7 @@ For larger changes, developers can edit the source files in `src/content/` and r
 
 ## Useful links
 
-Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.3.0.html?preview`:
+Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.3.1.html?preview`:
 
 | Option | Effect |
 |--------|--------|

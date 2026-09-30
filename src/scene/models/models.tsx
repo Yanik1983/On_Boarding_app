@@ -45,15 +45,16 @@ function Tube({ points, radius, color, segments = 64 }: { points: Vec3[]; radius
 
 /* -------------------------------------------------------------------- Heart */
 
-/** A rounded heart body, about 1.3 units tall and 0.86 deep, centred on the origin. */
+/** A plump, rounded heart body, about 1.4 units tall and 0.86 deep, centred on the origin. */
 export function heartGeometry() {
+  // A deep bevel on a thin extrusion gives rounded, pillow-like sides that look good from every angle.
   const g = new ExtrudeGeometry(heartShape(), {
-    depth: 0.46,
+    depth: 0.24,
     bevelEnabled: true,
-    bevelThickness: 0.2,
-    bevelSize: 0.13,
-    bevelSegments: 14,
-    curveSegments: 72,
+    bevelThickness: 0.31,
+    bevelSize: 0.17,
+    bevelSegments: 20,
+    curveSegments: 96,
   })
   g.center()
   return g
