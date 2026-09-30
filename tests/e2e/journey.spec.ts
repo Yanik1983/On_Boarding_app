@@ -37,11 +37,15 @@ async function nextUntil(page: Page, predicate: () => Promise<boolean>) {
 
 test('a new employee can complete the whole journey offline', async ({ page }) => {
   expect(file, 'run "npm run build" first').toBeTruthy()
+  // Test machines have no graphics card (software rendering), so this flow test uses a smaller window
+  // and Auto quality to stay fast. Rendering quality itself is not what this test checks.
+  test.setTimeout(480_000)
+  await page.setViewportSize({ width: 1280, height: 720 })
   const external = await offline(page)
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
 
-  await page.goto(url)
+  await page.goto(url + '?quality=auto')
   const { stations } = await readContent(page)
   await expect(page.locator('#panel-title')).toHaveText(stations[0].title)
   await expect(page.locator('canvas')).toBeVisible()

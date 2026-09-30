@@ -6,8 +6,8 @@ import { useStore, type Quality } from '../state/store'
 import { Dialog } from './Dialog'
 
 const qualities: { value: Quality; label: string; text: string }[] = [
-  { value: 'auto', label: 'Auto', text: 'Adapts to your computer to keep motion smooth (recommended).' },
-  { value: 'high', label: 'High', text: "Your screen's full native resolution." },
+  { value: 'high', label: 'High', text: "Sharpest picture at your screen's full resolution (recommended)." },
+  { value: 'auto', label: 'Auto', text: 'Lowers the resolution only if your computer struggles to keep motion smooth.' },
   { value: 'ultra', label: 'Ultra 4K', text: 'Renders at least 3840 px wide. Best on powerful computers and 4K screens.' },
 ]
 

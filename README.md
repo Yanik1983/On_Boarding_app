@@ -30,12 +30,13 @@ The new employee travels along a path through nine stations. Each station has sh
 Other features:
 
 - **Progress is saved** in the browser on that computer, so employees can pause and resume. Nothing is sent anywhere.
-- **Quality settings** (gear icon): *Auto* adapts to the computer; *High* renders at the screen's native resolution; *Ultra 4K* renders at least 3840 pixels wide.
+- **Quality settings** (gear icon): *High* (default) draws every pixel of the screen, up to 3× on phones, and supersamples standard 1080p screens at 1.5× for extra-crisp edges. *Auto* lowers the resolution on slow computers. *Ultra 4K* renders at least 3840 pixels wide.
+- **Rendering detail**: ambient occlusion (soft contact shading), high-resolution shadows and reflections, polished and brushed-metal materials, and sharp 3D labels with an outline for legibility.
 - **Phones and tablets**: the text becomes a bottom sheet and the 3D scene moves into the space above it. **Hide text** shrinks the panel to its title and buttons so the 3D fills the screen (this also works on desktop).
 
   | | |
   |---|---|
-  | ![Phone](docs/screenshots/phone-credo.png) | ![Phone, text hidden](docs/screenshots/phone-products-text-hidden.png) |
+  | ![Phone](docs/screenshots/phone-divisions.png) | ![Phone, campus](docs/screenshots/phone-site.png) |
 
 - **Accessibility**: keyboard navigation (← →, Esc), reduced-motion mode (follows the Windows setting), and a text-only mode. The text-only mode switches on automatically when the computer can't show 3D.
 - **Draft badge**: shown while any content is marked `"draft"`, so nobody mistakes unreviewed text for approved material.
@@ -61,7 +62,7 @@ For larger changes, developers can edit the source files in `src/content/` and r
 
 ## Useful links
 
-Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.2.1.html?preview`:
+Add these to the file name when opening, e.g. `JnJ-MedTech-Onboarding-v0.3.0.html?preview`:
 
 | Option | Effect |
 |--------|--------|

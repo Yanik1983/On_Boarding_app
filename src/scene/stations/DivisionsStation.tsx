@@ -83,9 +83,21 @@ export function DivisionsStation({ station }: { station: StationOf<'divisions'> 
         }}
       >
         <mesh position={HUB} castShadow>
-          <sphereGeometry args={[1.05, 64, 64]} />
-          <meshStandardMaterial color="#f3f5f8" metalness={0.55} roughness={0.22} />
+          <sphereGeometry args={[1.05, 96, 64]} />
+          <meshPhysicalMaterial color="#f3f5f8" metalness={0.55} roughness={0.2} clearcoat={0.8} clearcoatRoughness={0.15} />
         </mesh>
+        {[0, Math.PI / 3, (2 * Math.PI) / 3].map((r) => (
+          <mesh key={r} position={HUB} rotation-y={r}>
+            <torusGeometry args={[1.07, 0.012, 8, 128]} />
+            <meshPhysicalMaterial color="#c9cfd7" metalness={1} roughness={0.2} />
+          </mesh>
+        ))}
+        {[-0.5, 0, 0.5].map((y) => (
+          <mesh key={y} position={[HUB[0], HUB[1] + y, HUB[2]]} rotation-x={Math.PI / 2}>
+            <torusGeometry args={[Math.sqrt(1.07 ** 2 - y * y), 0.01, 8, 128]} />
+            <meshPhysicalMaterial color="#c9cfd7" metalness={1} roughness={0.2} />
+          </mesh>
+        ))}
         <mesh ref={ring} position={HUB} rotation-x={Math.PI / 2.3}>
           <torusGeometry args={[1.5, 0.035, 12, 96]} />
           <meshStandardMaterial color={station.color} emissive={station.color} emissiveIntensity={2} toneMapped={false} />
@@ -94,7 +106,7 @@ export function DivisionsStation({ station }: { station: StationOf<'divisions'> 
           <cylinderGeometry args={[0.5, 0.9, 0.6, 48]} />
           <meshStandardMaterial color="#ffffff" roughness={0.3} />
         </mesh>
-        <BillboardLabel position={[0, 4.0, 0]} fontSize={0.36} weight="bold" color={station.color}>
+        <BillboardLabel position={[0, 4.5, 0]} fontSize={0.36} weight="bold" color={station.color}>
           {station.hubLabel}
         </BillboardLabel>
       </group>

@@ -1,6 +1,6 @@
 /* Root size scales with the screen so the interface stays proportional from laptops to 4K displays. */
 html {
-  font-size: clamp(14px, 0.9vw, 36px);
+  font-size: clamp(15px, 0.9vw, 36px);
 }
 
 *,
@@ -22,6 +22,8 @@ body {
   font-family: var(--font);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow: hidden;
 }
 
@@ -198,7 +200,7 @@ input {
   backdrop-filter: blur(18px) saturate(1.2);
   overflow: hidden;
   border-top: 0.3rem solid var(--accent);
-  animation: panel-in 0.45s ease both;
+  animation: panel-in 0.45s ease backwards;
 }
 
 @keyframes panel-in {
@@ -846,9 +848,11 @@ input {
 
 .journey {
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
   bottom: 1.1rem;
-  transform: translateX(-50%);
+  width: max-content;
+  margin-inline: auto;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -857,7 +861,7 @@ input {
   background: var(--surface);
   box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
-  max-width: calc(100vw - 2rem);
+  max-width: calc(100vw - 1rem);
 }
 
 .journey .icon-button {
@@ -1104,10 +1108,10 @@ input {
 /* ------------------------------------------------------------ Text-only mode */
 
 .text-only .panel {
-  left: 50%;
-  right: auto;
+  left: 0;
+  right: 0;
   width: min(46rem, calc(100vw - 2rem));
-  transform: translateX(-50%);
+  margin-inline: auto;
   animation: none;
 }
 

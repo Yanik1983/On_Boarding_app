@@ -6,14 +6,14 @@ type TextProps = ComponentProps<typeof Text>
 
 /** SDF text with the bundled font – sharp at any resolution. */
 export function Label({ weight = 'semibold', ...props }: TextProps & { weight?: keyof typeof fonts }) {
-  return <Text font={fonts[weight]} anchorX="center" anchorY="middle" color="#1b1f24" {...props} />
+  return <Text font={fonts[weight]} sdfGlyphSize={128} anchorX="center" anchorY="middle" color="#14171b" {...props} />
 }
 
 /** Text that always faces the camera. */
 export function BillboardLabel({ position, ...props }: TextProps & { weight?: keyof typeof fonts }) {
   return (
     <Billboard position={position}>
-      <Label {...props} />
+      <Label outlineWidth="7%" outlineColor="#ffffff" outlineOpacity={0.85} {...props} />
     </Billboard>
   )
 }

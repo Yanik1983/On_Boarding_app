@@ -56,16 +56,30 @@ function useViewportWidth() {
 }
 
 /**
- * Resolution strategy:
- * - auto:  native resolution (max 2x), lowered automatically when the frame rate drops
- * - high:  native resolution of the screen (max 2x)
+ * Resolution strategy (pixels rendered per CSS pixel):
+ * - high:  the screen's full native resolution – every physical pixel is drawn (default). Standard
+ *          (1x) monitors are supersampled at 1.5x for crisper edges and text; if the frame rate stays
+ *          low, only that extra is dropped – High never renders below native resolution.
+ * - auto:  starts at native resolution and steps down if the frame rate stays very low
  * - ultra: at least 3840 pixels wide (true 4K; supersampled on smaller screens)
+ * Phones have very dense screens (often 3x), so they are allowed up to 3x.
  */
 function resolution(quality: Quality, factor: number, viewportWidth: number) {
   const native = window.devicePixelRatio || 1
+  const full = Math.min(native, isHandheld() ? 3 : 2)
   if (quality === 'ultra') return Math.min(3, Math.max(native, 3840 / Math.max(1, viewportWidth)))
-  if (quality === 'high') return Math.min(native, 2)
-  return Math.max(0.75, Math.min(native, isHandheld() ? 1.5 : 2) * factor)
+  if (quality === 'high') return Math.max(full, Math.max(full, isHandheld() ? full : 1.5) * factor)
+  return Math.max(Math.min(native, 1), full * factor)
+}
+
+/** Waits a few seconds (loading and shader compilation make the first frames slow) before judging performance. */
+function useDelayedStart(ms: number) {
+  const [started, setStarted] = useState(false)
+  useEffect(() => {
+    const timer = window.setTimeout(() => setStarted(true), ms)
+    return () => window.clearTimeout(timer)
+  }, [ms])
+  return started
 }
 
 export function Scene() {
@@ -76,7 +90,9 @@ export function Scene() {
   const [factor, setFactor] = useState(1)
   const viewportWidth = useViewportWidth()
   const dpr = resolution(quality, factor, viewportWidth)
-  const lowPower = quality === 'auto' && factor < 0.7
+  const lowPower = quality === 'auto' && factor <= 0.6
+  const monitor = useDelayedStart(4000) && quality !== 'ultra'
+  const shadowMapSize = quality !== 'auto' && !isHandheld() ? 4096 : 2048
   const initialView = stationView(current, window.innerWidth, window.innerHeight)
 
   return (
@@ -89,14 +105,17 @@ export function Scene() {
       camera={{ fov: 40, near: 0.1, far: 400, position: initialView.position }}
       aria-hidden
     >
-      <PerformanceMonitor
-        flipflops={3}
-        onDecline={() => setFactor((f) => Math.max(0.5, f - 0.2))}
-        onIncline={() => setFactor((f) => Math.min(1, f + 0.1))}
-        onFallback={() => setFactor(0.5)}
-      />
+      {monitor && (
+        <PerformanceMonitor
+          bounds={() => [24, 45]}
+          flipflops={4}
+          onDecline={() => setFactor((f) => Math.max(0.6, f - 0.15))}
+          onIncline={() => setFactor((f) => Math.min(1, f + 0.1))}
+          onFallback={() => setFactor(0.7)}
+        />
+      )}
       <Suspense fallback={null}>
-        <World shadows={!lowPower} />
+        <World shadows={!lowPower} shadowMapSize={shadowMapSize} />
         <JourneyPath count={stations.length} color={stations[0]?.color ?? '#d51900'} />
         {stations.map((station, index) => (
           <Station
@@ -114,7 +133,7 @@ export function Scene() {
             {centerpiece(station)}
           </Station>
         ))}
-        <Effects full={!lowPower} />
+        <Effects full={!lowPower} handheld={isHandheld()} />
       </Suspense>
       <CameraRig />
       {urlOptions.debug && <Stats />}

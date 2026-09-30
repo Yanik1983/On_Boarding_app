@@ -1,16 +1,15 @@
 import { Line, RoundedBox } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
-import { CatmullRomCurve3, Color, ExtrudeGeometry, ShaderMaterial, TubeGeometry, Vector3, type Group, type Mesh, type MeshStandardMaterial } from 'three'
+import { CatmullRomCurve3, Color, ShaderMaterial, TubeGeometry, Vector3, type Group, type Mesh, type MeshStandardMaterial } from 'three'
 import type { Line2 } from 'three-stdlib'
 import type { StationOf } from '../../content/schema'
 import { useReducedMotion } from '../../lib/motion'
 import { computeOptics, OPTICS } from '../../lib/optics'
 import { useStore, type Rhythm } from '../../state/store'
-import { heartShape } from '../geometry'
 import { useHover } from '../interaction'
 import { BillboardLabel, Label } from '../Label'
-import { KneeModel, lensGeometry, METAL } from '../models/models'
+import { heartGeometry, HeartVessels, KneeModel, lensGeometry, METAL } from '../models/models'
 import { useStationInfo } from '../StationContext'
 
 const BENCH_Y = 2.4
@@ -140,11 +139,7 @@ function HeartBench() {
   const trace = useRef<Line2>(null)
   const tip = useRef<Mesh>(null)
 
-  const geometry = useMemo(() => {
-    const g = new ExtrudeGeometry(heartShape(), { depth: 0.4, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.1, bevelSegments: 10, curveSegments: 64 })
-    g.center()
-    return g
-  }, [])
+  const geometry = useMemo(heartGeometry, [])
 
   const material = useMemo(
     () =>
@@ -197,7 +192,10 @@ function HeartBench() {
 
   return (
     <group position={[-0.3, BENCH_Y + 0.4, 0]}>
-      <mesh geometry={geometry} material={material} scale={2.6} castShadow />
+      <group scale={2.2}>
+        <mesh geometry={geometry} material={material} castShadow />
+        <HeartVessels />
+      </group>
       <mesh geometry={catheter}>
         <meshStandardMaterial color="#27415f" roughness={0.4} />
       </mesh>

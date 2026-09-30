@@ -1,7 +1,7 @@
 import { CameraControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
-import type { PerspectiveCamera } from 'three'
+import type { Fog, PerspectiveCamera } from 'three'
 import { useReducedMotion } from '../lib/motion'
 import { useStore } from '../state/store'
 import { focusView, stationView } from './layout'
@@ -46,7 +46,16 @@ export function CameraRig() {
 
   // On phones the text sheet covers the lower part of the screen: shift the rendered image up so
   // the scene is centred in the visible area between the top bar and the sheet.
-  useFrame(({ camera, size }, delta) => {
+  useFrame(({ camera, size, scene }, delta) => {
+    // Fog starts just behind the station being viewed, so it stays crisp even when the camera is far
+    // back (phones, close-ups) while neighbouring stations and the horizon fade softly.
+    const fog = scene.fog as Fog | null
+    const distance = controls.current?.distance
+    if (fog && distance) {
+      fog.near = distance + 12
+      fog.far = distance + 90
+    }
+
     const { top, bottom } = useStore.getState().viewInset
     const target = (bottom - top) / 2
     const o = offset.current

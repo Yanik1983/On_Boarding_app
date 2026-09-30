@@ -4,6 +4,6 @@ export const SHEET_QUERY = '(orientation: portrait), (max-width: 600px)'
 
 export const isSheetLayout = (width: number, height: number) => height >= width || width <= 600
 
-/** Phones and tablets: cap the resolution a little lower in Auto quality to save battery. */
+/** Phones and tablets (small touch screens). */
 export const isHandheld = () =>
   typeof window !== 'undefined' && (window.matchMedia?.('(pointer: coarse)').matches ?? false) && Math.min(window.screen.width, window.screen.height) < 820

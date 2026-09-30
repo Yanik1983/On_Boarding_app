@@ -1,9 +1,10 @@
 import { Float, RoundedBox } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
-import type { Group } from 'three'
+import { useMemo, useRef } from 'react'
+import { ExtrudeGeometry, type Group } from 'three'
 import type { StationOf } from '../../content/schema'
 import { useReducedMotion } from '../../lib/motion'
+import { heartShape } from '../geometry'
 import { useHover, useSelection } from '../interaction'
 import { Label } from '../Label'
 import { useStationInfo } from '../StationContext'
@@ -42,7 +43,84 @@ function CredoPanel({ index, id, title, color }: { index: number; id: string; ti
   )
 }
 
-const orbitShapes = ['sphere', 'box', 'torus', 'octahedron'] as const
+/** Small 3D symbols: a heart (patients), people (employees), a globe (communities), rising bars (stockholders). */
+function StakeholderIcon({ index, color, selected }: { index: number; color: string; selected: boolean }) {
+  const heart = useMemo(() => {
+    const g = new ExtrudeGeometry(heartShape(), { depth: 0.12, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 6, curveSegments: 32 })
+    g.center()
+    return g
+  }, [])
+  const body = (
+    <meshPhysicalMaterial
+      color={selected ? color : '#eef1f5'}
+      emissive={color}
+      emissiveIntensity={selected ? 0.8 : 0.04}
+      metalness={0.3}
+      roughness={0.3}
+      clearcoat={0.6}
+    />
+  )
+  const accent = <meshPhysicalMaterial color={color} roughness={0.3} clearcoat={0.6} />
+  switch (index) {
+    case 0:
+      return (
+        <mesh geometry={heart} scale={0.6} castShadow>
+          {body}
+        </mesh>
+      )
+    case 1:
+      return (
+        <group scale={0.8}>
+          {[-0.22, 0, 0.22].map((x, i) => (
+            <group key={x} position={[x, i === 1 ? 0.05 : 0, i === 1 ? 0.05 : 0]}>
+              <mesh position={[0, 0.16, 0]} castShadow>
+                <sphereGeometry args={[0.08, 24, 16]} />
+                {i === 1 ? accent : body}
+              </mesh>
+              <mesh position={[0, -0.06, 0]} castShadow>
+                <capsuleGeometry args={[0.08, 0.14, 8, 16]} />
+                {body}
+              </mesh>
+            </group>
+          ))}
+        </group>
+      )
+    case 2:
+      return (
+        <group scale={0.9}>
+          <mesh castShadow>
+            <sphereGeometry args={[0.24, 32, 24]} />
+            {body}
+          </mesh>
+          {[0, Math.PI / 2].map((r) => (
+            <mesh key={r} rotation-y={r}>
+              <torusGeometry args={[0.25, 0.012, 8, 48]} />
+              {accent}
+            </mesh>
+          ))}
+          <mesh rotation-x={Math.PI / 2}>
+            <torusGeometry args={[0.25, 0.012, 8, 48]} />
+            {accent}
+          </mesh>
+        </group>
+      )
+    default:
+      return (
+        <group scale={0.9}>
+          {[0.12, 0.22, 0.34].map((h, i) => (
+            <mesh key={i} position={[-0.14 + i * 0.14, h / 2 - 0.15, 0]} castShadow>
+              <boxGeometry args={[0.1, h, 0.1]} />
+              {i === 2 ? accent : body}
+            </mesh>
+          ))}
+          <mesh position={[-0.02, -0.17, 0]}>
+            <boxGeometry args={[0.42, 0.02, 0.14]} />
+            {body}
+          </mesh>
+        </group>
+      )
+  }
+}
 
 /** A frosted-glass monolith with the four responsibilities, circled by four symbols. */
 export function CredoStation({ station }: { station: StationOf<'credo'> }) {
@@ -64,6 +142,20 @@ export function CredoStation({ station }: { station: StationOf<'credo'> }) {
       <RoundedBox args={[3.4, 5.4, 0.5]} radius={0.14} position={[0, 2.95, 0]} castShadow>
         <meshPhysicalMaterial color="#f4f7fb" transmission={0.9} thickness={1.4} roughness={0.32} ior={1.45} clearcoat={0.6} />
       </RoundedBox>
+      {/* Chrome frame */}
+      {[
+        [0, 5.68, 3.5, 0.08],
+        [0, 0.24, 3.5, 0.08],
+        [-1.73, 2.96, 0.08, 5.44],
+        [1.73, 2.96, 0.08, 5.44],
+      ].map(([x, y, w, h], i) => (
+        <RoundedBox key={i} args={[w, h, 0.56]} radius={0.03} position={[x, y, 0]} castShadow>
+          <meshPhysicalMaterial color="#dfe3e8" metalness={1} roughness={0.18} anisotropy={0.6} />
+        </RoundedBox>
+      ))}
+      <Label position={[0, 0.305, 2.05]} rotation-x={-Math.PI / 2} fontSize={0.26} letterSpacing={0.25} color={station.color} weight="bold">
+        OUR CREDO · 1943
+      </Label>
       {station.responsibilities.map((r, i) => (
         <CredoPanel key={r.id} index={i} id={r.id} title={r.title} color={station.color} />
       ))}
@@ -71,22 +163,11 @@ export function CredoStation({ station }: { station: StationOf<'credo'> }) {
         {station.responsibilities.map((r, i) => {
           const angle = (i / 4) * Math.PI * 2
           const isSelected = selected === r.id
-          const shape = orbitShapes[i]
           return (
-            <Float key={r.id} speed={reduced ? 0 : 2} floatIntensity={0.6} rotationIntensity={0.8}>
-              <mesh position={[Math.cos(angle) * 3.3, Math.sin(i * 1.7) * 0.8, Math.sin(angle) * 3.3]} scale={isSelected ? 1.5 : 1} castShadow>
-                {shape === 'sphere' && <sphereGeometry args={[0.28, 32, 32]} />}
-                {shape === 'box' && <boxGeometry args={[0.42, 0.42, 0.42]} />}
-                {shape === 'torus' && <torusGeometry args={[0.24, 0.09, 16, 48]} />}
-                {shape === 'octahedron' && <octahedronGeometry args={[0.32]} />}
-                <meshStandardMaterial
-                  color={isSelected ? station.color : '#e9edf2'}
-                  emissive={station.color}
-                  emissiveIntensity={isSelected ? 1.2 : 0.05}
-                  metalness={0.4}
-                  roughness={0.3}
-                />
-              </mesh>
+            <Float key={r.id} speed={reduced ? 0 : 2} floatIntensity={0.6} rotationIntensity={0.5}>
+              <group position={[Math.cos(angle) * 3.3, Math.sin(i * 1.7) * 0.8, Math.sin(angle) * 3.3]} scale={isSelected ? 1.9 : 1.4}>
+                <StakeholderIcon index={i} color={station.color} selected={isSelected} />
+              </group>
             </Float>
           )
         })}

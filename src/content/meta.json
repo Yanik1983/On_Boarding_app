@@ -1,7 +1,7 @@
 {
   "appTitle": "New Employee Journey",
   "organizationLabel": "Johnson & Johnson MedTech",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "releaseDate": "2026-09-30",
   "allowFreeOrder": false,
   "order": ["welcome", "company", "credo", "divisions", "organization", "technology", "products", "site", "finish"]

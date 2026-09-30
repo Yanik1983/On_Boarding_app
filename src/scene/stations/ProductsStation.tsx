@@ -46,9 +46,9 @@ function Pedestal({ product, position, color, scale }: { product: Product; posit
       </mesh>
       <mesh position={[0, 2.4, 0]}>
         <coneGeometry args={[0.75, 3, 32, 1, true]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={isSelected ? 0.1 : 0.045} depthWrite={false} blending={AdditiveBlending} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={isSelected ? 0.06 : 0.022} depthWrite={false} blending={AdditiveBlending} />
       </mesh>
-      <group ref={model} position={[0, 1.65, 0]} scale={isSelected ? 1.15 : hovered ? 1.02 : 0.95}>
+      <group ref={model} position={[0, 1.8, 0]} scale={isSelected ? 1.4 : hovered ? 1.28 : 1.2}>
         <ProductModel type={product.model} />
       </group>
       <Label position={[0, 0.5, 0.6]} fontSize={0.14} maxWidth={1.3} textAlign="center" color={isSelected ? color : '#1b1f24'}>

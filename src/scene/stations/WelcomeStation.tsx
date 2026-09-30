@@ -1,3 +1,4 @@
+import { Sparkles } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import { CatmullRomCurve3, TubeGeometry, Vector3, type Group } from 'three'
@@ -42,6 +43,7 @@ export function WelcomeStation({ station }: { station: StationOf<'welcome'> }) {
 
   return (
     <group>
+      <Sparkles count={70} scale={[6.5, 5, 6.5]} position={[0, 2.8, 0]} size={3} speed={reduced ? 0 : 0.35} color={station.color} opacity={0.7} />
       <group ref={spin}>
         <mesh geometry={strandA} castShadow>
           <meshStandardMaterial color={station.color} emissive={station.color} emissiveIntensity={0.9} roughness={0.3} />

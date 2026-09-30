@@ -141,7 +141,7 @@ export const useStore = create<State>()(
       allowFreeOrder: false,
       preview: false,
       ...initialProgress,
-      quality: 'auto',
+      quality: 'high',
       reducedMotion: null,
       textOnly: false,
       selection: {},
@@ -212,8 +212,14 @@ export const useStore = create<State>()(
     }),
     {
       name: 'jnj-medtech-onboarding',
-      version: 1,
+      version: 2,
       storage: createJSONStorage(() => safeStorage),
+      // v1 defaulted to 'auto', which could render blurry; move those users to the sharp default.
+      migrate: (persisted, version) => {
+        const state = persisted as { quality?: Quality }
+        if (version < 2 && state.quality === 'auto') state.quality = 'high'
+        return state as State
+      },
       partialize: (s) => ({
         current: s.current,
         highestUnlocked: s.highestUnlocked,

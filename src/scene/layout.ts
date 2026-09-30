@@ -27,7 +27,7 @@ export function stationView(index: number, width: number, height: number): View 
   const [x, , z] = stationPosition(index)
   const aspect = width / Math.max(1, height)
   if (isSheetLayout(width, height)) {
-    const distance = Math.min(50, Math.max(20, fitDistance(6, aspect)))
+    const distance = Math.min(46, Math.max(20, fitDistance(5.9, aspect)))
     return { position: [x, 3 + distance * 0.34, z + distance * 0.94], target: [x, 3, z] }
   }
   return { position: [x + 1.5, 5.8, z + 16.5], target: [x + 3.4, 2.5, z] }

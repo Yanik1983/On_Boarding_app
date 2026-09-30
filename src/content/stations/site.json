@@ -40,8 +40,8 @@
     { "id": "labs", "name": "R&D Labs", "x": -3.2, "z": -0.3, "text": "Where our engineers and scientists develop and test new products. Lab coats and safety glasses required. [Placeholder]" },
     { "id": "production", "name": "Clean rooms", "x": 0.6, "z": -0.1, "text": "Controlled environment for manufacturing. Enter only after gowning training, following the posted gowning procedure. [Placeholder]" },
     { "id": "cafeteria", "name": "Cafeteria", "x": 0.4, "z": 2.8, "text": "Breakfast and lunch. [Placeholder – hours and menu info.]" },
-    { "id": "assembly", "name": "Emergency assembly point", "x": 4.2, "z": 2.8, "text": "In an alarm, leave by the nearest exit and go here. Do not use lifts. Wait for the roll call. [Placeholder – confirm location.]" },
-    { "id": "parking", "name": "Parking", "x": 2.7, "z": 0.3, "text": "Employee parking and bicycle stands. [Placeholder – permits, EV charging.]" }
+    { "id": "assembly", "name": "Emergency assembly point", "x": 4.4, "z": 3.0, "text": "In an alarm, leave by the nearest exit and go here. Do not use lifts. Wait for the roll call. [Placeholder – confirm location.]" },
+    { "id": "parking", "name": "Parking", "x": 3.3, "z": 1.55, "text": "Employee parking and bicycle stands. [Placeholder – permits, EV charging.]" }
   ],
   "safety": [
     "Wear your badge visibly at all times.",
